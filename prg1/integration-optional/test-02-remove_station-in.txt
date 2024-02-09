@@ -1,0 +1,53 @@
+# Test removing a station
+clear_all
+station_count
+# Remove non-existing
+remove_station 33
+# Add stations, regions and containment
+add_station xx "Notown" (100,0)
+add_station 123456 "Sector7" (0,0)
+add_station 654321 "Segment2" (6,6)
+stations_distance_increasing
+stations_alphabetically
+station_count
+add_region 321 "Area9" (3,3) (3,4) (4,5)
+add_region 123 "Region6" (2,2) (1,1) (1,2)
+all_regions
+add_station_to_region 123456 321
+add_station_to_region 654321 123
+find_stations_with_coord (100,0)
+# Remove station
+stations_alphabetically
+stations_distance_increasing
+remove_station xx
+stations_distance_increasing
+stations_alphabetically
+all_stations
+# Test region containment
+station_in_regions xx
+find_stations_with_coord (100,0)
+# Remove another
+stations_distance_increasing
+remove_station 654321
+stations_distance_increasing
+# add a station with same ID
+add_station xx "yay" (1,1)
+stations_distance_increasing
+stations_alphabetically
+all_stations
+# add the exact same as previous removed one
+remove_station xx
+add_station xx "yay" (1,1)
+stations_distance_increasing
+stations_alphabetically
+all_stations
+# test removing non unique coordinated station
+clear_all
+add_station A "A" (10,10)
+add_station B "B" (1,1)
+add_station C "C" (1,1)
+stations_distance_increasing
+all_stations
+remove_station C
+stations_distance_increasing
+all_stations

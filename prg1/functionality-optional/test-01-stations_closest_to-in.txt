@@ -1,0 +1,15 @@
+# Test stations_closest_to
+clear_all
+station_count
+# Test empty
+stations_closest_to (1,1)
+# Add stations
+add_station 123456789 "Fire" (11,12)
+add_station 987654321 "Shelter" (21,22)
+add_station 33 "Park" (3,3)
+add_station 66 "Bay" (50,0)
+station_count
+# Test stations_closest_to
+stations_closest_to (20,10)
+stations_closest_to (1,1)
+stations_closest_to (10,10)

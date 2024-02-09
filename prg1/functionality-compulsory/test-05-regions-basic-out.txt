@@ -1,0 +1,89 @@
+> # requires test-00-basic + add_region, all_regions, get_region_name and get_region_coords
+> clear_all
+Cleared all stations
+> all_regions
+No regions!
+> # add regions
+> add_region 0 "R0" (1,2) (0,0) (2,1)
+Region:
+   R0: id=0
+> all_regions
+Region:
+   R0: id=0
+> add_region 0 "wrong" (1,2) (3,4) (5,6)
+Failed (NO_REGION returned)!
+> all_regions
+Region:
+   R0: id=0
+> add_region 1 "R1" (1,1) (3,2) (2,3)
+Region:
+   R1: id=1
+> get_region_name 0
+Name for region with id0 is R0
+> get_region_coords 0
+Region0 has coordinates
+(1,2)
+(0,0)
+(2,1)
+> all_regions
+Regions:
+1. R0: id=0
+2. R1: id=1
+> get_region_name 1
+Name for region with id1 is R1
+> get_region_coords 1
+Region1 has coordinates
+(1,1)
+(3,2)
+(2,3)
+> # check that clear_all also clears regions in basic case
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> all_regions
+No regions!
+> # Add stations
+> add_station 123456789 "Fire" (11,12)
+Station:
+   Fire: pos=(11,12), id=123456789
+> add_station 987654321 "Shelter" (21,22)
+Station:
+   Shelter: pos=(21,22), id=987654321
+> add_station 654321 "Segment2" (6,6)
+Station:
+   Segment2: pos=(6,6), id=654321
+> station_count
+Number of stations: 3
+> # Add regions
+> add_region 11 "Region1" (0,0) (10,0) (10,10) (0,10)
+Region:
+   Region1: id=11
+> add_region 22 "Region2" (0,0) (20,0) (20,20) (0,20)
+Region:
+   Region2: id=22
+> all_regions
+Regions:
+1. Region1: id=11
+2. Region2: id=22
+> # Add stations and regions to other regions
+> add_station_to_region 654321 11
+Added 'Segment2' to region 'Region1'
+Station:
+   Segment2: pos=(6,6), id=654321
+Region:
+   Region1: id=11
+> add_station_to_region 123456789 22
+Added 'Fire' to region 'Region2'
+Station:
+   Fire: pos=(11,12), id=123456789
+Region:
+   Region2: id=22
+> add_subregion_to_region 11 22
+Added 'Region1' as a subregion of 'Region2'
+Regions:
+1. Region1: id=11
+2. Region2: id=22
+> 

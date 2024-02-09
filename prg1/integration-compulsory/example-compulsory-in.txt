@@ -1,0 +1,24 @@
+clear_all
+# Stations
+station_count
+read "example-data/example-stations.txt" silent
+station_count
+station_info tpe
+station_info kli
+stations_alphabetically
+stations_distance_increasing
+change_station_coord tpe (600,500)
+find_stations_with_coord (600,500)
+add_departure tpe ic20 1000
+add_departure tpe ic22 1200
+add_departure kli pyo276 1942
+station_departures_after tpe 1100
+station_departures_after kli 1900
+remove_departure kli pyo276 1942
+station_departures_after kli 1900
+# Regions
+read "example-data/example-regions.txt" silent
+all_regions
+region_info 6440429
+station_in_regions kuo
+station_in_regions kli

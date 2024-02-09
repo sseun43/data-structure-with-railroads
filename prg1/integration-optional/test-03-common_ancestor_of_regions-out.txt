@@ -1,0 +1,246 @@
+> # Test common_ancestor_of_regions
+> clear_all
+Cleared all stations
+> all_regions
+No regions!
+> # Add areas and subarea relationships
+> add_region 0 "Root" (9,9) (10,10) (10,9)
+Region:
+   Root: id=0
+> add_region 123456 "Sector7" (0,0) (1,1) (2,4)
+Region:
+   Sector7: id=123456
+> add_region 654321 "Segment2" (6,6) (4,6) (6,4)
+Region:
+   Segment2: id=654321
+> add_subregion_to_region 123456 0
+Added 'Sector7' as a subregion of 'Root'
+Regions:
+1. Sector7: id=123456
+2. Root: id=0
+> add_subregion_to_region 654321 0
+Added 'Segment2' as a subregion of 'Root'
+Regions:
+1. Segment2: id=654321
+2. Root: id=0
+> add_region 321 "Area9" (3,3) (3,6) (6,3)
+Region:
+   Area9: id=321
+> add_region 123 "Region6" (2,2) (3,2) (3,3)
+Region:
+   Region6: id=123
+> add_subregion_to_region 321 123456
+Added 'Area9' as a subregion of 'Sector7'
+Regions:
+1. Area9: id=321
+2. Sector7: id=123456
+> add_subregion_to_region 123 123456
+Added 'Region6' as a subregion of 'Sector7'
+Regions:
+1. Region6: id=123
+2. Sector7: id=123456
+> all_regions
+Regions:
+1. Root: id=0
+2. Region6: id=123
+3. Area9: id=321
+4. Sector7: id=123456
+5. Segment2: id=654321
+> # Test common_ancestor_of_regions
+> common_ancestor_of_regions 123456 654321
+Regions:
+1. Sector7: id=123456
+2. Segment2: id=654321
+3. Root: id=0
+> common_ancestor_of_regions 123456 321
+Regions:
+1. Sector7: id=123456
+2. Area9: id=321
+3. Root: id=0
+> common_ancestor_of_regions 123456 123
+Regions:
+1. Sector7: id=123456
+2. Region6: id=123
+3. Root: id=0
+> common_ancestor_of_regions 321 654321
+Regions:
+1. Area9: id=321
+2. Segment2: id=654321
+3. Root: id=0
+> common_ancestor_of_regions 123 654321
+Regions:
+1. Region6: id=123
+2. Segment2: id=654321
+3. Root: id=0
+> common_ancestor_of_regions 123 321
+Regions:
+1. Region6: id=123
+2. Area9: id=321
+3. Sector7: id=123456
+> # Test non-existing
+> common_ancestor_of_regions 123 56
+No common parent region found.
+Regions:
+1. Region6: id=123
+2. !NO_NAME!: id=56
+3. --NO_REGION--
+> common_ancestor_of_regions 56 123
+No common parent region found.
+Regions:
+1. !NO_NAME!: id=56
+2. Region6: id=123
+3. --NO_REGION--
+> common_ancestor_of_regions 56 57
+No common parent region found.
+Regions:
+1. !NO_NAME!: id=56
+2. !NO_NAME!: id=57
+3. --NO_REGION--
+> # Test no parents, valid regions
+> common_ancestor_of_regions 0 123
+No common parent region found.
+Regions:
+1. Root: id=0
+2. Region6: id=123
+3. --NO_REGION--
+> common_ancestor_of_regions 123 0
+No common parent region found.
+Regions:
+1. Region6: id=123
+2. Root: id=0
+3. --NO_REGION--
+> #clear and test with regions in different subtrees
+Unknown command!
+> add_region 42 "Ro1" (9,9) (10,10) (10,9)
+Region:
+   Ro1: id=42
+> add_region 20 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=20
+> add_region 22 "R2" (9,9) (10,10) (10,9)
+Region:
+   R2: id=22
+> add_region 10 "R3" (9,9) (10,10) (10,9)
+Region:
+   R3: id=10
+> add_region 9 "Ro2" (9,9) (10,10) (10,9)
+Region:
+   Ro2: id=9
+> add_region 11 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=11
+> add_region 7 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=7
+> add_region 3 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=3
+> add_subregion_to_region 20 42
+Added 'R1' as a subregion of 'Ro1'
+Regions:
+1. R1: id=20
+2. Ro1: id=42
+> add_subregion_to_region 22 20
+Added 'R2' as a subregion of 'R1'
+Regions:
+1. R2: id=22
+2. R1: id=20
+> add_subregion_to_region 10 22
+Added 'R3' as a subregion of 'R2'
+Regions:
+1. R3: id=10
+2. R2: id=22
+> add_subregion_to_region 11 9
+Added 'R1' as a subregion of 'Ro2'
+Regions:
+1. R1: id=11
+2. Ro2: id=9
+> add_subregion_to_region 7 11
+Added 'R1' as a subregion of 'R1'
+Regions:
+1. R1: id=7
+2. R1: id=11
+> add_subregion_to_region 3 7
+Added 'R1' as a subregion of 'R1'
+Regions:
+1. R1: id=3
+2. R1: id=7
+> common_ancestor_of_regions 3 10
+No common parent region found.
+Regions:
+1. R1: id=3
+2. R3: id=10
+3. --NO_REGION--
+> # another test with dividing subtrees
+> clear_all
+Cleared all stations
+> add_region 42 "Ro1" (9,9) (10,10) (10,9)
+Region:
+   Ro1: id=42
+> add_region 20 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=20
+> add_region 22 "R2" (9,9) (10,10) (10,9)
+Region:
+   R2: id=22
+> add_region 10 "R3" (9,9) (10,10) (10,9)
+Region:
+   R3: id=10
+> add_region 9 "Ro2" (9,9) (10,10) (10,9)
+Region:
+   Ro2: id=9
+> add_region 11 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=11
+> add_region 7 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=7
+> add_region 3 "R1" (9,9) (10,10) (10,9)
+Region:
+   R1: id=3
+> add_subregion_to_region 20 42
+Added 'R1' as a subregion of 'Ro1'
+Regions:
+1. R1: id=20
+2. Ro1: id=42
+> add_subregion_to_region 22 20
+Added 'R2' as a subregion of 'R1'
+Regions:
+1. R2: id=22
+2. R1: id=20
+> add_subregion_to_region 10 22
+Added 'R3' as a subregion of 'R2'
+Regions:
+1. R3: id=10
+2. R2: id=22
+> add_subregion_to_region 11 9
+Added 'R1' as a subregion of 'Ro2'
+Regions:
+1. R1: id=11
+2. Ro2: id=9
+> add_subregion_to_region 7 11
+Added 'R1' as a subregion of 'R1'
+Regions:
+1. R1: id=7
+2. R1: id=11
+> add_subregion_to_region 3 7
+Added 'R1' as a subregion of 'R1'
+Regions:
+1. R1: id=3
+2. R1: id=7
+> add_subregion_to_region 9 20
+Added 'Ro2' as a subregion of 'R1'
+Regions:
+1. Ro2: id=9
+2. R1: id=20
+> common_ancestor_of_regions 3 10
+Regions:
+1. R1: id=3
+2. R3: id=10
+3. R1: id=20
+> common_ancestor_of_regions 10 3
+Regions:
+1. R3: id=10
+2. R1: id=3
+3. R1: id=20
+> 

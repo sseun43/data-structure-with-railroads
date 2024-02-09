@@ -1,0 +1,4 @@
+# first command_count_1
+perftest stations_alphabetically 42 100000
+# then command_count_20
+perftest 20*stations_alphabetically 42 100000

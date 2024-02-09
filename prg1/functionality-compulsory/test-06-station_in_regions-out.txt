@@ -1,0 +1,68 @@
+> # Test basic region operations
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> # Add stations
+> add_station 123456789 "Fire" (11,12)
+Station:
+   Fire: pos=(11,12), id=123456789
+> add_station 987654321 "Shelter" (21,22)
+Station:
+   Shelter: pos=(21,22), id=987654321
+> add_station 654321 "Segment2" (6,6)
+Station:
+   Segment2: pos=(6,6), id=654321
+> station_count
+Number of stations: 3
+> # Add regions
+> add_region 11 "Region1" (0,0) (10,0) (10,10) (0,10)
+Region:
+   Region1: id=11
+> add_region 22 "Region2" (0,0) (20,0) (20,20) (0,20)
+Region:
+   Region2: id=22
+> all_regions
+Regions:
+1. Region1: id=11
+2. Region2: id=22
+> # Station with no parent region
+> station_in_regions 123456789
+Station does not belong to any region.
+Station:
+   Fire: pos=(11,12), id=123456789
+> # Add stations and regions to other regions
+> add_station_to_region 654321 11
+Added 'Segment2' to region 'Region1'
+Station:
+   Segment2: pos=(6,6), id=654321
+Region:
+   Region1: id=11
+> add_station_to_region 123456789 22
+Added 'Fire' to region 'Region2'
+Station:
+   Fire: pos=(11,12), id=123456789
+Region:
+   Region2: id=22
+> add_subregion_to_region 11 22
+Added 'Region1' as a subregion of 'Region2'
+Regions:
+1. Region1: id=11
+2. Region2: id=22
+> # Stations in regions after
+> station_in_regions 123456789
+Station:
+   Fire: pos=(11,12), id=123456789
+Region:
+   Region2: id=22
+> station_in_regions 987654321
+Station does not belong to any region.
+Station:
+   Shelter: pos=(21,22), id=987654321
+> station_in_regions 654321
+Station:
+   Segment2: pos=(6,6), id=654321
+Regions:
+1. Region1: id=11
+2. Region2: id=22
+> 

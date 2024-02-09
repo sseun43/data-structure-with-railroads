@@ -1,0 +1,14 @@
+*.pro.user*
+.DS_Store
+*.o
+a.out
+build-*
+.~lock.*
+~*
+.vscode
+.qmake.stash
+Makefile
+moc_mainwindow.cpp
+moc_predefs.h
+ui_mainwindow.h
+

@@ -1,0 +1,103 @@
+> clear_all
+Cleared all stations
+> # Test adding and removing departure from invalid station
+> add_departure S1 tr1 1000
+Adding departure failed!
+> all_stations
+No stations!
+> remove_departure S1 tr1 1000
+Removing departure failed!
+> all_stations
+No stations!
+> # station_departures_after with invalid stationid
+> station_departures_after S1 0000
+No such station (NO_TIME, NO_TRAIN returned)
+> # get_region_coords with invalid region
+> get_region_coords 0
+Failed (NO_COORD returned)!
+> # add_subregion_to_region with invalid ids
+> add_region 11 "Region1" (0,0) (10,0) (10,10) (0,10)
+Region:
+   Region1: id=11
+> add_subregion_to_region 11 0
+Adding a subregion failed!
+> add_subregion_to_region 0 11
+Adding a subregion failed!
+> # adding another region and the subregion add should succeed
+> add_region 22 "Region2" (0,0) (20,0) (20,20) (0,20)
+Region:
+   Region2: id=22
+> add_subregion_to_region 22 11
+Added 'Region2' as a subregion of 'Region1'
+Regions:
+1. Region2: id=22
+2. Region1: id=11
+> # but this one should not
+> add_subregion_to_region 22 11
+Adding a subregion failed!
+> # add_station_to_region with invalid id:s
+> add_station_to_region S1 11
+Adding a station to region failed!
+> add_station S1 "First" (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> add_station_to_region S1 42
+Adding a station to region failed!
+> # adding the station to region
+> station_in_regions S1
+Station does not belong to any region.
+Station:
+   First: pos=(1,1), id=S1
+> add_station_to_region S1 11
+Added 'First' to region 'Region1'
+Station:
+   First: pos=(1,1), id=S1
+Region:
+   Region1: id=11
+> station_in_regions S1
+Station:
+   First: pos=(1,1), id=S1
+Region:
+   Region1: id=11
+> # then this one should fail
+> add_station_to_region S1 22
+Adding a station to region failed!
+> # testing multiple same coordinates
+> clear_all
+Cleared all stations
+> add_station A "A" (10,10)
+Station:
+   A: pos=(10,10), id=A
+> add_station B "B" (1,1)
+Station:
+   B: pos=(1,1), id=B
+> add_station C "C" (1,1)
+Station:
+   C: pos=(1,1), id=C
+> stations_distance_increasing
+Stations:
+1. B: pos=(1,1), id=B
+2. C: pos=(1,1), id=C
+3. A: pos=(10,10), id=A
+> change_station_coord B (10,10)
+Station:
+   B: pos=(10,10), id=B
+> stations_distance_increasing
+Stations:
+1. C: pos=(1,1), id=C
+2. A: pos=(10,10), id=A
+3. B: pos=(10,10), id=B
+> # more departures
+> remove_departure A T 1000
+Removing departure failed!
+> add_departure A T 1000
+Train T leaves from station A (A) at 1000
+> add_departure A T2 1000
+Train T2 leaves from station A (A) at 1000
+> add_departure A T 1000
+Adding departure failed!
+> station_departures_after A 0000
+Departures from station A (A) after 0000:
+ T at 1000
+ T2 at 1000
+> 

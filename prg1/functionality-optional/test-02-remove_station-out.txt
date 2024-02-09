@@ -1,0 +1,70 @@
+> # Test removing a station
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> # Remove non-existing
+> remove_station 33
+Failed (NO_STATION returned)!
+> # Add stations, regions and containment
+> add_station xx "Notown" (100,0)
+Station:
+   Notown: pos=(100,0), id=xx
+> add_station 123456 "Sector7" (0,0)
+Station:
+   Sector7: pos=(0,0), id=123456
+> add_station 654321 "Segment2" (6,6)
+Station:
+   Segment2: pos=(6,6), id=654321
+> station_count
+Number of stations: 3
+> add_region 321 "Area9" (3,3) (3,4) (4,5)
+Region:
+   Area9: id=321
+> add_region 123 "Region6" (2,2) (1,1) (1,2)
+Region:
+   Region6: id=123
+> all_regions
+Regions:
+1. Region6: id=123
+2. Area9: id=321
+> add_station_to_region 123456 321
+Added 'Sector7' to region 'Area9'
+Station:
+   Sector7: pos=(0,0), id=123456
+Region:
+   Area9: id=321
+> add_station_to_region 654321 123
+Added 'Segment2' to region 'Region6'
+Station:
+   Segment2: pos=(6,6), id=654321
+Region:
+   Region6: id=123
+> # Remove station
+> stations_alphabetically
+Stations:
+1. Notown: pos=(100,0), id=xx
+2. Sector7: pos=(0,0), id=123456
+3. Segment2: pos=(6,6), id=654321
+> remove_station xx
+Notown removed.
+> stations_alphabetically
+Stations:
+1. Sector7: pos=(0,0), id=123456
+2. Segment2: pos=(6,6), id=654321
+> # Test region containment
+> station_in_regions xx
+Station:
+   !NO_NAME!: pos=(--NO_COORD--), id=xx
+Failed (NO_REGION returned)!
+> # Remove another
+> stations_distance_increasing
+Stations:
+1. Sector7: pos=(0,0), id=123456
+2. Segment2: pos=(6,6), id=654321
+> remove_station 654321
+Segment2 removed.
+> stations_distance_increasing
+Station:
+   Sector7: pos=(0,0), id=123456
+> 

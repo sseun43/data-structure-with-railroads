@@ -1,0 +1,10 @@
+# First read in compulsory example
+read "integration-compulsory/example-compulsory-in.txt"
+all_subregions_of_region 54224
+stations_closest_to (500,400)
+common_ancestor_of_regions 2528474 6440429
+remove_station tpe
+stations_alphabetically
+stations_distance_increasing
+find_stations_with_coord (600,600)
+stations_closest_to (500,400)

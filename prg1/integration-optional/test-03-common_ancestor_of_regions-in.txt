@@ -1,0 +1,63 @@
+# Test common_ancestor_of_regions
+clear_all
+all_regions
+# Add areas and subarea relationships
+add_region 0 "Root" (9,9) (10,10) (10,9)
+add_region 123456 "Sector7" (0,0) (1,1) (2,4)
+add_region 654321 "Segment2" (6,6) (4,6) (6,4)
+add_subregion_to_region 123456 0
+add_subregion_to_region 654321 0
+add_region 321 "Area9" (3,3) (3,6) (6,3)
+add_region 123 "Region6" (2,2) (3,2) (3,3)
+add_subregion_to_region 321 123456
+add_subregion_to_region 123 123456
+all_regions
+# Test common_ancestor_of_regions
+common_ancestor_of_regions 123456 654321
+common_ancestor_of_regions 123456 321
+common_ancestor_of_regions 123456 123
+common_ancestor_of_regions 321 654321
+common_ancestor_of_regions 123 654321
+common_ancestor_of_regions 123 321
+# Test non-existing
+common_ancestor_of_regions 123 56
+common_ancestor_of_regions 56 123
+common_ancestor_of_regions 56 57
+# Test no parents, valid regions
+common_ancestor_of_regions 0 123
+common_ancestor_of_regions 123 0
+#clear and test with regions in different subtrees
+add_region 42 "Ro1" (9,9) (10,10) (10,9)
+add_region 20 "R1" (9,9) (10,10) (10,9)
+add_region 22 "R2" (9,9) (10,10) (10,9)
+add_region 10 "R3" (9,9) (10,10) (10,9)
+add_region 9 "Ro2" (9,9) (10,10) (10,9)
+add_region 11 "R1" (9,9) (10,10) (10,9)
+add_region 7 "R1" (9,9) (10,10) (10,9)
+add_region 3 "R1" (9,9) (10,10) (10,9)
+add_subregion_to_region 20 42
+add_subregion_to_region 22 20
+add_subregion_to_region 10 22
+add_subregion_to_region 11 9
+add_subregion_to_region 7 11
+add_subregion_to_region 3 7
+common_ancestor_of_regions 3 10
+# another test with dividing subtrees
+clear_all
+add_region 42 "Ro1" (9,9) (10,10) (10,9)
+add_region 20 "R1" (9,9) (10,10) (10,9)
+add_region 22 "R2" (9,9) (10,10) (10,9)
+add_region 10 "R3" (9,9) (10,10) (10,9)
+add_region 9 "Ro2" (9,9) (10,10) (10,9)
+add_region 11 "R1" (9,9) (10,10) (10,9)
+add_region 7 "R1" (9,9) (10,10) (10,9)
+add_region 3 "R1" (9,9) (10,10) (10,9)
+add_subregion_to_region 20 42
+add_subregion_to_region 22 20
+add_subregion_to_region 10 22
+add_subregion_to_region 11 9
+add_subregion_to_region 7 11
+add_subregion_to_region 3 7
+add_subregion_to_region 9 20
+common_ancestor_of_regions 3 10
+common_ancestor_of_regions 10 3

@@ -1,0 +1,32 @@
+clear_all
+station_count
+all_stations
+stations_distance_increasing
+# add stations
+add_station S1 "First" (1,1)
+station_count
+all_stations
+add_station S2 "Second" (1,2)
+station_count
+all_stations
+# get the order
+stations_distance_increasing
+# get the order again just to make sure :wink:
+stations_distance_increasing
+# add more and check the order
+add_station S4 "Second" (1,2)
+stations_distance_increasing
+stations_distance_increasing
+add_station S3 "Second" (1,2)
+stations_distance_increasing
+stations_distance_increasing
+add_station S5 "A" (2,1)
+stations_distance_increasing
+stations_distance_increasing
+add_station S6 "A" (0,2)
+stations_distance_increasing
+stations_distance_increasing
+clear_all
+station_count
+all_stations
+stations_distance_increasing

@@ -1,0 +1,121 @@
+> # First read in compulsory example
+> read "integration-compulsory/example-compulsory-in.txt"
+** Commands from 'integration-compulsory/example-compulsory-in.txt'
+> clear_all
+Cleared all stations
+> # Stations
+> station_count
+Number of stations: 0
+> read "example-data/example-stations.txt" silent
+** Commands from 'example-data/example-stations.txt'
+...(output discarded in silent mode)...
+** End of commands from 'example-data/example-stations.txt'
+> station_count
+Number of stations: 5
+> station_info tpe
+Station:
+   tampere: pos=(542,455), id=tpe
+> station_info kli
+Station:
+   kolari: pos=(579,1758), id=kli
+> stations_alphabetically
+Stations:
+1. kolari: pos=(579,1758), id=kli
+2. kuopio: pos=(945,767), id=kuo
+3. rovaniemi: pos=(740,1569), id=roi
+4. tampere: pos=(542,455), id=tpe
+5. turku satama: pos=(366,219), id=tus
+> stations_distance_increasing
+Stations:
+1. turku satama: pos=(366,219), id=tus
+2. tampere: pos=(542,455), id=tpe
+3. kuopio: pos=(945,767), id=kuo
+4. rovaniemi: pos=(740,1569), id=roi
+5. kolari: pos=(579,1758), id=kli
+> change_station_coord tpe (600,500)
+Station:
+   tampere: pos=(600,500), id=tpe
+> find_stations_with_coord (600,500)
+Station:
+   tampere: pos=(600,500), id=tpe
+> add_departure tpe ic20 1000
+Train ic20 leaves from station tampere (tpe) at 1000
+> add_departure tpe ic22 1200
+Train ic22 leaves from station tampere (tpe) at 1200
+> add_departure kli pyo276 1942
+Train pyo276 leaves from station kolari (kli) at 1942
+> station_departures_after tpe 1100
+Departures from station tampere (tpe) after 1100:
+ ic22 at 1200
+> station_departures_after kli 1900
+Departures from station kolari (kli) after 1900:
+ pyo276 at 1942
+> remove_departure kli pyo276 1942
+Removed departure of train pyo276 from station kolari (kli) at 1942
+> station_departures_after kli 1900
+No departures from station kolari (kli) after 1900
+> # Regions
+> read "example-data/example-regions.txt" silent
+** Commands from 'example-data/example-regions.txt'
+...(output discarded in silent mode)...
+** End of commands from 'example-data/example-regions.txt'
+> all_regions
+Regions:
+1. suomi - finland: id=54224
+2. lappi: id=1724359
+3. rovaniemi: id=2528474
+4. tampereen seutukunta: id=6440429
+> region_info 6440429
+Region:
+   tampereen seutukunta: id=6440429
+> station_in_regions kuo
+Station:
+   kuopio: pos=(945,767), id=kuo
+Region:
+   suomi - finland: id=54224
+> station_in_regions kli
+Station:
+   kolari: pos=(579,1758), id=kli
+Regions:
+1. lappi: id=1724359
+2. suomi - finland: id=54224
+> 
+** End of commands from 'integration-compulsory/example-compulsory-in.txt'
+> all_subregions_of_region 54224
+Regions:
+1. suomi - finland: id=54224
+2. lappi: id=1724359
+3. rovaniemi: id=2528474
+4. tampereen seutukunta: id=6440429
+> stations_closest_to (500,400)
+Stations:
+1. tampere: pos=(600,500), id=tpe
+2. turku satama: pos=(366,219), id=tus
+3. kuopio: pos=(945,767), id=kuo
+> common_ancestor_of_regions 2528474 6440429
+Regions:
+1. rovaniemi: id=2528474
+2. tampereen seutukunta: id=6440429
+3. suomi - finland: id=54224
+> remove_station tpe
+tampere removed.
+> stations_alphabetically
+Stations:
+1. kolari: pos=(579,1758), id=kli
+2. kuopio: pos=(945,767), id=kuo
+3. rovaniemi: pos=(740,1569), id=roi
+4. turku satama: pos=(366,219), id=tus
+> stations_distance_increasing
+Stations:
+1. turku satama: pos=(366,219), id=tus
+2. kuopio: pos=(945,767), id=kuo
+3. rovaniemi: pos=(740,1569), id=roi
+4. kolari: pos=(579,1758), id=kli
+> find_stations_with_coord (600,600)
+No stations found!
+> stations_closest_to (500,400)
+Stations:
+1. turku satama: pos=(366,219), id=tus
+2. kuopio: pos=(945,767), id=kuo
+3. rovaniemi: pos=(740,1569), id=roi
+> 

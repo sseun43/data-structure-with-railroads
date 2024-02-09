@@ -1,0 +1,108 @@
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> stations_distance_increasing
+> # add stations
+> add_station S1 "First" (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> station_count
+Number of stations: 1
+> all_stations
+Station:
+   First: pos=(1,1), id=S1
+> add_station S2 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S2
+> station_count
+Number of stations: 2
+> all_stations
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+> # get the order
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+> # get the order again just to make sure :wink:
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+> # add more and check the order
+> add_station S4 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S4
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+3. Second: pos=(1,2), id=S4
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+3. Second: pos=(1,2), id=S4
+> add_station S3 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S3
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+3. Second: pos=(1,2), id=S3
+4. Second: pos=(1,2), id=S4
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+3. Second: pos=(1,2), id=S3
+4. Second: pos=(1,2), id=S4
+> add_station S5 "A" (2,1)
+Station:
+   A: pos=(2,1), id=S5
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. A: pos=(2,1), id=S5
+3. Second: pos=(1,2), id=S2
+4. Second: pos=(1,2), id=S3
+5. Second: pos=(1,2), id=S4
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. A: pos=(2,1), id=S5
+3. Second: pos=(1,2), id=S2
+4. Second: pos=(1,2), id=S3
+5. Second: pos=(1,2), id=S4
+> add_station S6 "A" (0,2)
+Station:
+   A: pos=(0,2), id=S6
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. A: pos=(0,2), id=S6
+3. A: pos=(2,1), id=S5
+4. Second: pos=(1,2), id=S2
+5. Second: pos=(1,2), id=S3
+6. Second: pos=(1,2), id=S4
+> stations_distance_increasing
+Stations:
+1. First: pos=(1,1), id=S1
+2. A: pos=(0,2), id=S6
+3. A: pos=(2,1), id=S5
+4. Second: pos=(1,2), id=S2
+5. Second: pos=(1,2), id=S3
+6. Second: pos=(1,2), id=S4
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> stations_distance_increasing
+> 

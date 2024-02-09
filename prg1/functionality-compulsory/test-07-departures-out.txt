@@ -1,0 +1,32 @@
+> # Test departures
+> # Add stations
+> add_station 123456789 "Fire" (11,12)
+Station:
+   Fire: pos=(11,12), id=123456789
+> add_station 987654321 "Shelter" (21,22)
+Station:
+   Shelter: pos=(21,22), id=987654321
+> # Add departures
+> add_departure 123456789 tr1 1000
+Train tr1 leaves from station Fire (123456789) at 1000
+> add_departure 123456789 tr2 1300
+Train tr2 leaves from station Fire (123456789) at 1300
+> add_departure 987654321 tr1 1100
+Train tr1 leaves from station Shelter (987654321) at 1100
+> add_departure 987654321 tr3 2300
+Train tr3 leaves from station Shelter (987654321) at 2300
+> # Check departures
+> station_departures_after 123456789 0000
+Departures from station Fire (123456789) after 0000:
+ tr1 at 1000
+ tr2 at 1300
+> station_departures_after 123456789 1200
+Departures from station Fire (123456789) after 1200:
+ tr2 at 1300
+> station_departures_after 987654321 1100
+Departures from station Shelter (987654321) after 1100:
+ tr1 at 1100
+ tr3 at 2300
+> station_departures_after 987654321 2359
+No departures from station Shelter (987654321) after 2359
+> 

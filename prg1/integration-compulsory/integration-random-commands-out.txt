@@ -1,0 +1,581 @@
+> add_region 2579 "R2579" (272668,6639705) (272668,6639943) (272906,6639705) (272906,6639943)
+Region:
+   R2579: id=2579
+> add_region 4644 "R4644" (272618,6639655) (272618,6639993) (272956,6639655) (272956,6639993)
+Region:
+   R4644: id=4644
+> add_subregion_to_region 2579 4644
+Added 'R2579' as a subregion of 'R4644'
+Regions:
+1. R2579: id=2579
+2. R4644: id=4644
+> add_station SHangonkylantie "Hangonkylantie" (272787,6639824)
+Station:
+   Hangonkylantie: pos=(272787,6639824), id=SHangonkylantie
+> add_station_to_region SHangonkylantie 2579
+Added 'Hangonkylantie' to region 'R2579'
+Station:
+   Hangonkylantie: pos=(272787,6639824), id=SHangonkylantie
+Region:
+   R2579: id=2579
+> get_station_name SHangonkylantie
+Name for station with idSHangonkylantie is Hangonkylantie
+> station_departures_after SHangonkylantie 2027
+No departures from station Hangonkylantie (SHangonkylantie) after 2027
+> get_region_coords 2579
+Region2579 has coordinates
+(272668,6639705)
+(272668,6639943)
+(272906,6639705)
+(272906,6639943)
+> stations_distance_increasing
+Station:
+   Hangonkylantie: pos=(272787,6639824), id=SHangonkylantie
+> get_region_coords 2579
+Region2579 has coordinates
+(272668,6639705)
+(272668,6639943)
+(272906,6639705)
+(272906,6639943)
+> all_regions
+Regions:
+1. R2579: id=2579
+2. R4644: id=4644
+> get_station_coordinates SHangonkylantie
+StationSHangonkylantie has coordinates
+(272787,6639824)
+> station_in_regions SHangonkylantie
+Station:
+   Hangonkylantie: pos=(272787,6639824), id=SHangonkylantie
+Regions:
+1. R2579: id=2579
+2. R4644: id=4644
+> change_station_coord SHangonkylantie (272792,6639830)
+Station:
+   Hangonkylantie: pos=(272792,6639830), id=SHangonkylantie
+> all_regions
+Regions:
+1. R2579: id=2579
+2. R4644: id=4644
+> remove_station SHangonkylantie
+Hangonkylantie removed.
+> stations_alphabetically
+> all_regions
+Regions:
+1. R2579: id=2579
+2. R4644: id=4644
+> all_stations
+No stations!
+> add_region 357 "R357" (265244,6786843) (265244,6787081) (265482,6786843) (265482,6787081)
+Region:
+   R357: id=357
+> add_region 246 "R246" (265194,6786793) (265194,6787131) (265532,6786793) (265532,6787131)
+Region:
+   R246: id=246
+> add_subregion_to_region 357 246
+Added 'R357' as a subregion of 'R246'
+Regions:
+1. R357: id=357
+2. R246: id=246
+> add_station SMoortintie "Moortintie" (265363,6786962)
+Station:
+   Moortintie: pos=(265363,6786962), id=SMoortintie
+> add_station_to_region SMoortintie 357
+Added 'Moortintie' to region 'R357'
+Station:
+   Moortintie: pos=(265363,6786962), id=SMoortintie
+Region:
+   R357: id=357
+> station_in_regions SMoortintie
+Station:
+   Moortintie: pos=(265363,6786962), id=SMoortintie
+Regions:
+1. R357: id=357
+2. R246: id=246
+> stations_distance_increasing
+Station:
+   Moortintie: pos=(265363,6786962), id=SMoortintie
+> all_stations
+Station:
+   Moortintie: pos=(265363,6786962), id=SMoortintie
+> add_region 4548 "R4548" (261935,7013995) (261935,7014233) (262173,7013995) (262173,7014233)
+Region:
+   R4548: id=4548
+> add_region 3770 "R3770" (261885,7013945) (261885,7014283) (262223,7013945) (262223,7014283)
+Region:
+   R3770: id=3770
+> add_subregion_to_region 4548 3770
+Added 'R4548' as a subregion of 'R3770'
+Regions:
+1. R4548: id=4548
+2. R3770: id=3770
+> add_station SBokull "Bokull" (262054,7014114)
+Station:
+   Bokull: pos=(262054,7014114), id=SBokull
+> add_station_to_region SBokull 4548
+Added 'Bokull' to region 'R4548'
+Station:
+   Bokull: pos=(262054,7014114), id=SBokull
+Region:
+   R4548: id=4548
+> station_count
+Number of stations: 2
+> add_region 9736 "R9736" (353784,7549451) (353784,7549689) (354022,7549451) (354022,7549689)
+Region:
+   R9736: id=9736
+> add_region 267 "R267" (353734,7549401) (353734,7549739) (354072,7549401) (354072,7549739)
+Region:
+   R267: id=267
+> add_subregion_to_region 9736 267
+Added 'R9736' as a subregion of 'R267'
+Regions:
+1. R9736: id=9736
+2. R267: id=267
+> add_station SYlimuoniontie "Ylimuoniontie" (353903,7549570)
+Station:
+   Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> add_station_to_region SYlimuoniontie 9736
+Added 'Ylimuoniontie' to region 'R9736'
+Station:
+   Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+Region:
+   R9736: id=9736
+> get_region_name 4644
+Name for region with id4644 is R4644
+> get_station_name SMoortintie
+Name for station with idSMoortintie is Moortintie
+> find_stations_with_coord 2579
+Invalid parameters for command 'find_stations_with_coord'!
+> change_station_coord SMoortintie (265370,6786962)
+Station:
+   Moortintie: pos=(265370,6786962), id=SMoortintie
+> add_region 7316 "R7316" (423767,7203929) (423767,7204167) (424005,7203929) (424005,7204167)
+Region:
+   R7316: id=7316
+> add_region 4882 "R4882" (423717,7203879) (423717,7204217) (424055,7203879) (424055,7204217)
+Region:
+   R4882: id=4882
+> add_subregion_to_region 7316 4882
+Added 'R7316' as a subregion of 'R4882'
+Regions:
+1. R7316: id=7316
+2. R4882: id=4882
+> add_station SKarhuoja "Karhuoja" (423886,7204048)
+Station:
+   Karhuoja: pos=(423886,7204048), id=SKarhuoja
+> add_station_to_region SKarhuoja 7316
+Added 'Karhuoja' to region 'R7316'
+Station:
+   Karhuoja: pos=(423886,7204048), id=SKarhuoja
+Region:
+   R7316: id=7316
+> add_region 4095 "R4095" (385219,6722767) (385219,6723005) (385457,6722767) (385457,6723005)
+Region:
+   R4095: id=4095
+> add_region 2461 "R2461" (385169,6722717) (385169,6723055) (385507,6722717) (385507,6723055)
+Region:
+   R2461: id=2461
+> add_subregion_to_region 4095 2461
+Added 'R4095' as a subregion of 'R2461'
+Regions:
+1. R4095: id=4095
+2. R2461: id=2461
+> add_station SKurjenpolventie "Kurjenpolventie" (385338,6722886)
+Station:
+   Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+> add_station_to_region SKurjenpolventie 4095
+Added 'Kurjenpolventie' to region 'R4095'
+Station:
+   Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+Region:
+   R4095: id=4095
+> get_station_name SKarhuoja
+Name for station with idSKarhuoja is Karhuoja
+> stations_alphabetically
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+3. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+4. Moortintie: pos=(265370,6786962), id=SMoortintie
+5. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> station_count
+Number of stations: 5
+> stations_distance_increasing
+Stations:
+1. Moortintie: pos=(265370,6786962), id=SMoortintie
+2. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+3. Bokull: pos=(262054,7014114), id=SBokull
+4. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+5. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> station_in_regions SKarhuoja
+Station:
+   Karhuoja: pos=(423886,7204048), id=SKarhuoja
+Regions:
+1. R7316: id=7316
+2. R4882: id=4882
+> stations_distance_increasing
+Stations:
+1. Moortintie: pos=(265370,6786962), id=SMoortintie
+2. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+3. Bokull: pos=(262054,7014114), id=SBokull
+4. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+5. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> station_count
+Number of stations: 5
+> get_region_name 3770
+Name for region with id3770 is R3770
+> stations_alphabetically
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+3. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+4. Moortintie: pos=(265370,6786962), id=SMoortintie
+5. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> get_region_name 9736
+Name for region with id9736 is R9736
+> add_region 1566 "R1566" (281461,6701765) (281461,6702003) (281699,6701765) (281699,6702003)
+Region:
+   R1566: id=1566
+> add_region 314 "R314" (281411,6701715) (281411,6702053) (281749,6701715) (281749,6702053)
+Region:
+   R314: id=314
+> add_subregion_to_region 1566 314
+Added 'R1566' as a subregion of 'R314'
+Regions:
+1. R1566: id=1566
+2. R314: id=314
+> add_station SHeinaalhontie "Heinaalhontie" (281580,6701884)
+Station:
+   Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+> add_station_to_region SHeinaalhontie 1566
+Added 'Heinaalhontie' to region 'R1566'
+Station:
+   Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+Region:
+   R1566: id=1566
+> get_station_coordinates SMoortintie
+StationSMoortintie has coordinates
+(265370,6786962)
+> get_region_name 3770
+Name for region with id3770 is R3770
+> get_station_coordinates SKurjenpolventie
+StationSKurjenpolventie has coordinates
+(385338,6722886)
+> station_count
+Number of stations: 6
+> find_stations_with_coord 4882
+Invalid parameters for command 'find_stations_with_coord'!
+> all_stations
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+4. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+5. Moortintie: pos=(265370,6786962), id=SMoortintie
+6. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> station_in_regions SHeinaalhontie
+Station:
+   Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+Regions:
+1. R1566: id=1566
+2. R314: id=314
+> add_region 4280 "R4280" (383009,6713626) (383009,6713864) (383247,6713626) (383247,6713864)
+Region:
+   R4280: id=4280
+> add_region 2059 "R2059" (382959,6713576) (382959,6713914) (383297,6713576) (383297,6713914)
+Region:
+   R2059: id=2059
+> add_subregion_to_region 4280 2059
+Added 'R4280' as a subregion of 'R2059'
+Regions:
+1. R4280: id=4280
+2. R2059: id=2059
+> add_station SSalmelanmaki "Salmelanmaki" (383128,6713745)
+Station:
+   Salmelanmaki: pos=(383128,6713745), id=SSalmelanmaki
+> add_station_to_region SSalmelanmaki 4280
+Added 'Salmelanmaki' to region 'R4280'
+Station:
+   Salmelanmaki: pos=(383128,6713745), id=SSalmelanmaki
+Region:
+   R4280: id=4280
+> get_station_coordinates SHeinaalhontie
+StationSHeinaalhontie has coordinates
+(281580,6701884)
+> get_station_name SYlimuoniontie
+Name for station with idSYlimuoniontie is Ylimuoniontie
+> get_region_name 4548
+Name for region with id4548 is R4548
+> get_region_name 314
+Name for region with id314 is R314
+> stations_distance_increasing
+Stations:
+1. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+2. Moortintie: pos=(265370,6786962), id=SMoortintie
+3. Salmelanmaki: pos=(383128,6713745), id=SSalmelanmaki
+4. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+5. Bokull: pos=(262054,7014114), id=SBokull
+6. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+7. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> station_in_regions SSalmelanmaki
+Station:
+   Salmelanmaki: pos=(383128,6713745), id=SSalmelanmaki
+Regions:
+1. R4280: id=4280
+2. R2059: id=2059
+> add_region 1005 "R1005" (365244,7097457) (365244,7097695) (365482,7097457) (365482,7097695)
+Region:
+   R1005: id=1005
+> add_region 2732 "R2732" (365194,7097407) (365194,7097745) (365532,7097407) (365532,7097745)
+Region:
+   R2732: id=2732
+> add_subregion_to_region 1005 2732
+Added 'R1005' as a subregion of 'R2732'
+Regions:
+1. R1005: id=1005
+2. R2732: id=2732
+> add_station SReku "Reku" (365363,7097576)
+Station:
+   Reku: pos=(365363,7097576), id=SReku
+> add_station_to_region SReku 1005
+Added 'Reku' to region 'R1005'
+Station:
+   Reku: pos=(365363,7097576), id=SReku
+Region:
+   R1005: id=1005
+> add_region 417 "R417" (402056,6824581) (402056,6824819) (402294,6824581) (402294,6824819)
+Region:
+   R417: id=417
+> add_region 530 "R530" (402006,6824531) (402006,6824869) (402344,6824531) (402344,6824869)
+Region:
+   R530: id=530
+> add_subregion_to_region 417 530
+Added 'R417' as a subregion of 'R530'
+Regions:
+1. R417: id=417
+2. R530: id=530
+> add_station SPoikkijarventie "Poikkijarventie" (402175,6824700)
+Station:
+   Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+> add_station_to_region SPoikkijarventie 417
+Added 'Poikkijarventie' to region 'R417'
+Station:
+   Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+Region:
+   R417: id=417
+> add_region 5927 "R5927" (433533,6913973) (433533,6914211) (433771,6913973) (433771,6914211)
+Region:
+   R5927: id=5927
+> add_region 8873 "R8873" (433483,6913923) (433483,6914261) (433821,6913923) (433821,6914261)
+Region:
+   R8873: id=8873
+> add_subregion_to_region 5927 8873
+Added 'R5927' as a subregion of 'R8873'
+Regions:
+1. R5927: id=5927
+2. R8873: id=8873
+> add_station SKoivuharju "Koivuharju" (433652,6914092)
+Station:
+   Koivuharju: pos=(433652,6914092), id=SKoivuharju
+> add_station_to_region SKoivuharju 5927
+Added 'Koivuharju' to region 'R5927'
+Station:
+   Koivuharju: pos=(433652,6914092), id=SKoivuharju
+Region:
+   R5927: id=5927
+> get_station_name SMoortintie
+Name for station with idSMoortintie is Moortintie
+> station_count
+Number of stations: 10
+> get_station_name SBokull
+Name for station with idSBokull is Bokull
+> remove_station SMoortintie
+Moortintie removed.
+> add_region 832 "R832" (263613,6943194) (263613,6943432) (263851,6943194) (263851,6943432)
+Region:
+   R832: id=832
+> add_region 2080 "R2080" (263563,6943144) (263563,6943482) (263901,6943144) (263901,6943482)
+Region:
+   R2080: id=2080
+> add_subregion_to_region 832 2080
+Added 'R832' as a subregion of 'R2080'
+Regions:
+1. R832: id=832
+2. R2080: id=2080
+> add_station SPitkamonkyla "Pitkamonkyla" (263732,6943313)
+Station:
+   Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+> add_station_to_region SPitkamonkyla 832
+Added 'Pitkamonkyla' to region 'R832'
+Station:
+   Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+Region:
+   R832: id=832
+> remove_station SSalmelanmaki
+Salmelanmaki removed.
+> stations_alphabetically
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+4. Koivuharju: pos=(433652,6914092), id=SKoivuharju
+5. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+6. Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+7. Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+8. Reku: pos=(365363,7097576), id=SReku
+9. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> all_stations
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+4. Koivuharju: pos=(433652,6914092), id=SKoivuharju
+5. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+6. Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+7. Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+8. Reku: pos=(365363,7097576), id=SReku
+9. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> get_station_coordinates SPoikkijarventie
+StationSPoikkijarventie has coordinates
+(402175,6824700)
+> add_region 4510 "R4510" (232006,6721212) (232006,6721450) (232244,6721212) (232244,6721450)
+Region:
+   R4510: id=4510
+> add_region 1019 "R1019" (231956,6721162) (231956,6721500) (232294,6721162) (232294,6721500)
+Region:
+   R1019: id=1019
+> add_subregion_to_region 4510 1019
+Added 'R4510' as a subregion of 'R1019'
+Regions:
+1. R4510: id=4510
+2. R1019: id=1019
+> add_station SJonkkunen "Jonkkunen" (232125,6721331)
+Station:
+   Jonkkunen: pos=(232125,6721331), id=SJonkkunen
+> add_station_to_region SJonkkunen 4510
+Added 'Jonkkunen' to region 'R4510'
+Station:
+   Jonkkunen: pos=(232125,6721331), id=SJonkkunen
+Region:
+   R4510: id=4510
+> stations_alphabetically
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Jonkkunen: pos=(232125,6721331), id=SJonkkunen
+4. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+5. Koivuharju: pos=(433652,6914092), id=SKoivuharju
+6. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+7. Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+8. Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+9. Reku: pos=(365363,7097576), id=SReku
+10. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> all_stations
+Stations:
+1. Bokull: pos=(262054,7014114), id=SBokull
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Jonkkunen: pos=(232125,6721331), id=SJonkkunen
+4. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+5. Koivuharju: pos=(433652,6914092), id=SKoivuharju
+6. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+7. Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+8. Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+9. Reku: pos=(365363,7097576), id=SReku
+10. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> add_region 7291 "R7291" (464724,6818801) (464724,6819039) (464962,6818801) (464962,6819039)
+Region:
+   R7291: id=7291
+> add_region 3164 "R3164" (464674,6818751) (464674,6819089) (465012,6818751) (465012,6819089)
+Region:
+   R3164: id=3164
+> add_subregion_to_region 7291 3164
+Added 'R7291' as a subregion of 'R3164'
+Regions:
+1. R7291: id=7291
+2. R3164: id=3164
+> add_station SUlmalantie "Ulmalantie" (464843,6818920)
+Station:
+   Ulmalantie: pos=(464843,6818920), id=SUlmalantie
+> add_station_to_region SUlmalantie 7291
+Added 'Ulmalantie' to region 'R7291'
+Station:
+   Ulmalantie: pos=(464843,6818920), id=SUlmalantie
+Region:
+   R7291: id=7291
+> find_stations_with_coord 2579
+Invalid parameters for command 'find_stations_with_coord'!
+> station_count
+Number of stations: 11
+> add_region 8867 "R8867" (549723,7122198) (549723,7122436) (549961,7122198) (549961,7122436)
+Region:
+   R8867: id=8867
+> add_region 9050 "R9050" (549673,7122148) (549673,7122486) (550011,7122148) (550011,7122486)
+Region:
+   R9050: id=9050
+> add_subregion_to_region 8867 9050
+Added 'R8867' as a subregion of 'R9050'
+Regions:
+1. R8867: id=8867
+2. R9050: id=9050
+> add_station SRimpilanniemi "Rimpilanniemi" (549842,7122317)
+Station:
+   Rimpilanniemi: pos=(549842,7122317), id=SRimpilanniemi
+> add_station_to_region SRimpilanniemi 8867
+Added 'Rimpilanniemi' to region 'R8867'
+Station:
+   Rimpilanniemi: pos=(549842,7122317), id=SRimpilanniemi
+Region:
+   R8867: id=8867
+> get_region_coords 314
+Region314 has coordinates
+(281411,6701715)
+(281411,6702053)
+(281749,6701715)
+(281749,6702053)
+> all_regions
+Regions:
+1. R246: id=246
+2. R267: id=267
+3. R314: id=314
+4. R357: id=357
+5. R417: id=417
+6. R530: id=530
+7. R832: id=832
+8. R1005: id=1005
+9. R1019: id=1019
+10. R1566: id=1566
+11. R2059: id=2059
+12. R2080: id=2080
+13. R2461: id=2461
+14. R2579: id=2579
+15. R2732: id=2732
+16. R3164: id=3164
+17. R3770: id=3770
+18. R4095: id=4095
+19. R4280: id=4280
+20. R4510: id=4510
+21. R4548: id=4548
+22. R4644: id=4644
+23. R4882: id=4882
+24. R5927: id=5927
+25. R7291: id=7291
+26. R7316: id=7316
+27. R8867: id=8867
+28. R8873: id=8873
+29. R9050: id=9050
+30. R9736: id=9736
+> stations_distance_increasing
+Stations:
+1. Jonkkunen: pos=(232125,6721331), id=SJonkkunen
+2. Heinaalhontie: pos=(281580,6701884), id=SHeinaalhontie
+3. Kurjenpolventie: pos=(385338,6722886), id=SKurjenpolventie
+4. Pitkamonkyla: pos=(263732,6943313), id=SPitkamonkyla
+5. Poikkijarventie: pos=(402175,6824700), id=SPoikkijarventie
+6. Bokull: pos=(262054,7014114), id=SBokull
+7. Ulmalantie: pos=(464843,6818920), id=SUlmalantie
+8. Koivuharju: pos=(433652,6914092), id=SKoivuharju
+9. Reku: pos=(365363,7097576), id=SReku
+10. Karhuoja: pos=(423886,7204048), id=SKarhuoja
+11. Rimpilanniemi: pos=(549842,7122317), id=SRimpilanniemi
+12. Ylimuoniontie: pos=(353903,7549570), id=SYlimuoniontie
+> stations_distance_increasing

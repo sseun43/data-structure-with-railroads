@@ -1,0 +1,43 @@
+clear_all
+# Test adding and removing departure from invalid station
+add_departure S1 tr1 1000
+all_stations
+remove_departure S1 tr1 1000
+all_stations
+# station_departures_after with invalid stationid
+station_departures_after S1 0000
+# get_region_coords with invalid region
+get_region_coords 0
+# add_subregion_to_region with invalid ids
+add_region 11 "Region1" (0,0) (10,0) (10,10) (0,10)
+add_subregion_to_region 11 0
+add_subregion_to_region 0 11
+# adding another region and the subregion add should succeed
+add_region 22 "Region2" (0,0) (20,0) (20,20) (0,20)
+add_subregion_to_region 22 11
+# but this one should not
+add_subregion_to_region 22 11
+# add_station_to_region with invalid id:s
+add_station_to_region S1 11
+add_station S1 "First" (1,1)
+add_station_to_region S1 42
+# adding the station to region
+station_in_regions S1
+add_station_to_region S1 11
+station_in_regions S1
+# then this one should fail
+add_station_to_region S1 22
+# testing multiple same coordinates
+clear_all
+add_station A "A" (10,10)
+add_station B "B" (1,1)
+add_station C "C" (1,1)
+stations_distance_increasing
+change_station_coord B (10,10)
+stations_distance_increasing
+# more departures
+remove_departure A T 1000
+add_departure A T 1000
+add_departure A T2 1000
+add_departure A T 1000
+station_departures_after A 0000

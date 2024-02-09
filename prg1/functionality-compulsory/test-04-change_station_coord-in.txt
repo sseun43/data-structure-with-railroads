@@ -1,0 +1,19 @@
+# Test changing coord
+clear_all
+station_count
+# Change non-existing
+change_station_coord 123456789 (100,90)
+# Add stations
+add_station 123456789 "Fire" (11,12)
+add_station 987654321 "Shelter" (21,22)
+add_station 33 "Park" (3,3)
+add_station 66 "Bay" (50,0)
+station_count
+# Change coord
+stations_distance_increasing
+change_station_coord 33 (30,40)
+station_info 33
+stations_distance_increasing
+# Test find
+find_stations_with_coord (3,3)
+find_stations_with_coord (30,40)

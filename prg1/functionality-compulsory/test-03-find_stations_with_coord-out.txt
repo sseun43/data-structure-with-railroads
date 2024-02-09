@@ -1,0 +1,67 @@
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> find_stations_with_coord (1,1)
+No stations found!
+> # add stations
+> add_station S1 "First" (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> station_count
+Number of stations: 1
+> all_stations
+Station:
+   First: pos=(1,1), id=S1
+> add_station S2 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S2
+> station_count
+Number of stations: 2
+> all_stations
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+> # get the order
+> find_stations_with_coord (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> # add more and check the order
+> add_station S4 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S4
+> find_stations_with_coord (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> add_station S3 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S3
+> find_stations_with_coord (2,1)
+No stations found!
+> add_station S5 "A" (2,1)
+Station:
+   A: pos=(2,1), id=S5
+> find_stations_with_coord (2,1)
+Station:
+   A: pos=(2,1), id=S5
+> add_station S6 "A" (0,2)
+Station:
+   A: pos=(0,2), id=S6
+> find_stations_with_coord (0,0)
+No stations found!
+> find_stations_with_coord (1,2)
+Stations:
+1. Second: pos=(1,2), id=S2
+2. Second: pos=(1,2), id=S3
+3. Second: pos=(1,2), id=S4
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> find_stations_with_coord (1,2)
+No stations found!
+> 

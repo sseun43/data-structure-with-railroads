@@ -1,0 +1,27 @@
+clear_all
+station_count
+all_stations
+find_stations_with_coord (1,1)
+# add stations
+add_station S1 "First" (1,1)
+station_count
+all_stations
+add_station S2 "Second" (1,2)
+station_count
+all_stations
+# get the order
+find_stations_with_coord (1,1)
+# add more and check the order
+add_station S4 "Second" (1,2)
+find_stations_with_coord (1,1)
+add_station S3 "Second" (1,2)
+find_stations_with_coord (2,1)
+add_station S5 "A" (2,1)
+find_stations_with_coord (2,1)
+add_station S6 "A" (0,2)
+find_stations_with_coord (0,0)
+find_stations_with_coord (1,2)
+clear_all
+station_count
+all_stations
+find_stations_with_coord (1,2)

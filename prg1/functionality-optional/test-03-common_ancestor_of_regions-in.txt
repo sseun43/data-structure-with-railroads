@@ -1,0 +1,25 @@
+# Test common_ancestor_of_regions
+clear_all
+all_regions
+# Add areas and subarea relationships
+add_region 0 "Root" (9,9) (10,10) (10,9)
+add_region 123456 "Sector7" (0,0) (1,1) (2,4)
+add_region 654321 "Segment2" (6,6) (4,6) (6,4)
+add_subregion_to_region 123456 0
+add_subregion_to_region 654321 0
+add_region 321 "Area9" (3,3) (3,6) (6,3)
+add_region 123 "Region6" (2,2) (3,2) (3,3)
+add_subregion_to_region 321 123456
+add_subregion_to_region 123 123456
+all_regions
+# Test common_ancestor_of_regions
+common_ancestor_of_regions 123456 654321
+common_ancestor_of_regions 123456 321
+common_ancestor_of_regions 123456 123
+common_ancestor_of_regions 321 654321
+common_ancestor_of_regions 123 654321
+common_ancestor_of_regions 123 321
+# Test non-existing
+common_ancestor_of_regions 123 56
+common_ancestor_of_regions 56 123
+common_ancestor_of_regions 56 57

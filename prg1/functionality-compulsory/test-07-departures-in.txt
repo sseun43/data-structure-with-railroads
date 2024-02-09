@@ -1,0 +1,14 @@
+# Test departures
+# Add stations
+add_station 123456789 "Fire" (11,12)
+add_station 987654321 "Shelter" (21,22)
+# Add departures
+add_departure 123456789 tr1 1000
+add_departure 123456789 tr2 1300
+add_departure 987654321 tr1 1100
+add_departure 987654321 tr3 2300
+# Check departures
+station_departures_after 123456789 0000
+station_departures_after 123456789 1200
+station_departures_after 987654321 1100
+station_departures_after 987654321 2359

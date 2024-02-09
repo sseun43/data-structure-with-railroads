@@ -1,0 +1,69 @@
+> # Requires clear_all, station_count, all_stations, get_station_name get_station_coordinates and add_station
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> get_station_name 0
+Failed (NO_NAME returned)!
+> get_station_coordinates 0
+Failed (NO_COORD returned)!
+> add_station S1 "First" (1,1)
+Station:
+   First: pos=(1,1), id=S1
+> station_count
+Number of stations: 1
+> all_stations
+Station:
+   First: pos=(1,1), id=S1
+> add_station S1 "Wrong" (2,3)
+Failed (NO_STATION returned)!
+> station_count
+Number of stations: 1
+> all_stations
+Station:
+   First: pos=(1,1), id=S1
+> add_station S2 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S2
+> station_count
+Number of stations: 2
+> all_stations
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+> # Add with same name and coordinates
+> add_station S3 "Second" (1,2)
+Station:
+   Second: pos=(1,2), id=S3
+> station_count
+Number of stations: 3
+> all_stations
+Stations:
+1. First: pos=(1,1), id=S1
+2. Second: pos=(1,2), id=S2
+3. Second: pos=(1,2), id=S3
+> get_station_name S1
+Name for station with idS1 is First
+> get_station_coordinates S1
+StationS1 has coordinates
+(1,1)
+> get_station_name S2
+Name for station with idS2 is Second
+> get_station_coordinates S2
+StationS2 has coordinates
+(1,2)
+> get_station_name S3
+Name for station with idS3 is Second
+> get_station_coordinates S3
+StationS3 has coordinates
+(1,2)
+> # check if clear all works in basic case
+> clear_all
+Cleared all stations
+> station_count
+Number of stations: 0
+> all_stations
+No stations!
+> 

@@ -1,0 +1,22 @@
+# Test basic region operations
+clear_all
+station_count
+# Add stations
+add_station 123456789 "Fire" (11,12)
+add_station 987654321 "Shelter" (21,22)
+add_station 654321 "Segment2" (6,6)
+station_count
+# Add regions
+add_region 11 "Region1" (0,0) (10,0) (10,10) (0,10)
+add_region 22 "Region2" (0,0) (20,0) (20,20) (0,20)
+all_regions
+# Station with no parent region
+station_in_regions 123456789
+# Add stations and regions to other regions
+add_station_to_region 654321 11
+add_station_to_region 123456789 22
+add_subregion_to_region 11 22
+# Stations in regions after
+station_in_regions 123456789
+station_in_regions 987654321
+station_in_regions 654321

@@ -1,0 +1,29 @@
+# Requires clear_all, station_count, all_stations, get_station_name get_station_coordinates and add_station
+clear_all
+station_count
+all_stations
+get_station_name 0
+get_station_coordinates 0
+add_station S1 "First" (1,1)
+station_count
+all_stations
+add_station S1 "Wrong" (2,3)
+station_count
+all_stations
+add_station S2 "Second" (1,2)
+station_count
+all_stations
+# Add with same name and coordinates
+add_station S3 "Second" (1,2)
+station_count
+all_stations
+get_station_name S1
+get_station_coordinates S1
+get_station_name S2
+get_station_coordinates S2
+get_station_name S3
+get_station_coordinates S3
+# check if clear all works in basic case
+clear_all
+station_count
+all_stations

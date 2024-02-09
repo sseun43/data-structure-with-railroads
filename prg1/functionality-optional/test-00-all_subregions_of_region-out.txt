@@ -1,0 +1,65 @@
+> # Test all_subregions_of_region
+> clear_all
+Cleared all stations
+> all_regions
+No regions!
+> # Add regions and subregion relationships
+> add_region 123456 "Sector7" (0,0) (1,1) (2,4)
+Region:
+   Sector7: id=123456
+> add_region 654321 "Segment2" (6,6) (4,6) (6,4)
+Region:
+   Segment2: id=654321
+> add_subregion_to_region 123456 654321
+Added 'Sector7' as a subregion of 'Segment2'
+Regions:
+1. Sector7: id=123456
+2. Segment2: id=654321
+> add_region 321 "Area9" (3,3) (3,6) (6,3)
+Region:
+   Area9: id=321
+> add_region 123 "Region6" (2,2) (3,2) (3,3)
+Region:
+   Region6: id=123
+> add_subregion_to_region 321 123456
+Added 'Area9' as a subregion of 'Sector7'
+Regions:
+1. Area9: id=321
+2. Sector7: id=123456
+> add_subregion_to_region 123 123456
+Added 'Region6' as a subregion of 'Sector7'
+Regions:
+1. Region6: id=123
+2. Sector7: id=123456
+> all_regions
+Regions:
+1. Region6: id=123
+2. Area9: id=321
+3. Sector7: id=123456
+4. Segment2: id=654321
+> # Test all_subregions_of_region
+> all_subregions_of_region 123456
+Regions:
+1. Sector7: id=123456
+2. Region6: id=123
+3. Area9: id=321
+> all_subregions_of_region 654321
+Regions:
+1. Segment2: id=654321
+2. Region6: id=123
+3. Area9: id=321
+4. Sector7: id=123456
+> all_subregions_of_region 321
+No regions!
+Region:
+   Area9: id=321
+> all_subregions_of_region 123
+No regions!
+Region:
+   Region6: id=123
+> # Test non-existing
+> all_subregions_of_region 56
+Regions:
+1. !NO_NAME!: id=56
+2. --NO_REGION--
+> 
