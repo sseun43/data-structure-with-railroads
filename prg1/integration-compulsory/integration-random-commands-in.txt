@@ -13,7 +13,6 @@ get_station_coordinates SHangonkylantie
 station_in_regions SHangonkylantie
 change_station_coord SHangonkylantie (272792,6639830)
 all_regions
-remove_station SHangonkylantie
 stations_alphabetically
 all_regions
 all_stations
@@ -101,13 +100,11 @@ add_station_to_region SKoivuharju 5927
 get_station_name SMoortintie
 station_count
 get_station_name SBokull
-remove_station SMoortintie
 add_region 832 "R832" (263613,6943194) (263613,6943432) (263851,6943194) (263851,6943432)
 add_region 2080 "R2080" (263563,6943144) (263563,6943482) (263901,6943144) (263901,6943482)
 add_subregion_to_region 832 2080
 add_station SPitkamonkyla "Pitkamonkyla" (263732,6943313)
 add_station_to_region SPitkamonkyla 832
-remove_station SSalmelanmaki
 stations_alphabetically
 all_stations
 get_station_coordinates SPoikkijarventie
