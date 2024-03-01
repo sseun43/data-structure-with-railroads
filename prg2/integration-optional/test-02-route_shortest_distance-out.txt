@@ -1,0 +1,118 @@
+> # Test route_shortest_distance
+> clear_all
+Cleared all stations
+> clear_trains
+All trains removed.
+> all_stations
+No stations!
+> # Add stations
+> add_station Id1 "One" (1,1)
+Station:
+   One: pos=(1,1), id=Id1
+> add_station Id2 "Two" (1,3)
+Station:
+   Two: pos=(1,3), id=Id2
+> add_station Id3 "Three" (2,4)
+Station:
+   Three: pos=(2,4), id=Id3
+> add_station Id4 "Four" (10,1)
+Station:
+   Four: pos=(10,1), id=Id4
+> add_station Id5 "Five" (20,1)
+Station:
+   Five: pos=(20,1), id=Id5
+> station_count
+Number of stations: 5
+> # Add trains
+> add_train T12 Id1:0800 Id2:0900
+1. One (Id1) -> Two (Id2): T12 (at 0800)
+2. Two (Id2): T12 (at 0900)
+> add_train T21 Id2:0800 Id1:0900
+1. Two (Id2) -> One (Id1): T21 (at 0800)
+2. One (Id1): T21 (at 0900)
+> add_train T32 Id3:1000 Id2:1100
+1. Three (Id3) -> Two (Id2): T32 (at 1000)
+2. Two (Id2): T32 (at 1100)
+> add_train T23 Id2:1000 Id3:1100
+1. Two (Id2) -> Three (Id3): T23 (at 1000)
+2. Three (Id3): T23 (at 1100)
+> add_train T25 Id2:0800 Id5:0900
+1. Two (Id2) -> Five (Id5): T25 (at 0800)
+2. Five (Id5): T25 (at 0900)
+> add_train T52 Id5:0800 Id2:0900
+1. Five (Id5) -> Two (Id2): T52 (at 0800)
+2. Two (Id2): T52 (at 0900)
+> add_train T14 Id1:1000 Id4:1100
+1. One (Id1) -> Four (Id4): T14 (at 1000)
+2. Four (Id4): T14 (at 1100)
+> add_train T41 Id4:1000 Id1:1100
+1. Four (Id4) -> One (Id1): T41 (at 1000)
+2. One (Id1): T41 (at 1100)
+> add_train T45 Id4:0800 Id5:0900
+1. Four (Id4) -> Five (Id5): T45 (at 0800)
+2. Five (Id5): T45 (at 0900)
+> add_train T54 Id5:0800 Id4:0900
+1. Five (Id5) -> Four (Id4): T54 (at 0800)
+2. Four (Id4): T54 (at 0900)
+> add_train T34 Id3:1000 Id4:1100
+1. Three (Id3) -> Four (Id4): T34 (at 1000)
+2. Four (Id4): T34 (at 1100)
+> add_train T43 Id4:1000 Id3:1100
+1. Four (Id4) -> Three (Id3): T43 (at 1000)
+2. Three (Id3): T43 (at 1100)
+> add_train T35 Id3:1000 Id5:1100
+1. Three (Id3) -> Five (Id5): T35 (at 1000)
+2. Five (Id5): T35 (at 1100)
+> add_train T53 Id5:1000 Id3:1100
+1. Five (Id5) -> Three (Id3): T53 (at 1000)
+2. Three (Id3): T53 (at 1100)
+> # Test routing when the distance needs to be updated to a shorter one
+> route_shortest_distance Id1 Id5
+1. One (Id1) -> Four (Id4) (distance 0)
+2. Four (Id4) -> Five (Id5) (distance 9)
+3. Five (Id5) (distance 19)
+> # another test
+> clear_all
+Cleared all stations
+> clear_trains
+All trains removed.
+> all_stations
+No stations!
+> add_station A "A" (2,1)
+Station:
+   A: pos=(2,1), id=A
+> add_station C "C" (1,1)
+Station:
+   C: pos=(1,1), id=C
+> add_station B "B" (5,1)
+Station:
+   B: pos=(5,1), id=B
+> add_station D "D" (3,1)
+Station:
+   D: pos=(3,1), id=D
+> add_station E "E" (6,1)
+Station:
+   E: pos=(6,1), id=E
+> add_train AB A:1000 B:1100
+1. A (A) -> B (B): AB (at 1000)
+2. B (B): AB (at 1100)
+> add_train AC A:1000 C:1100
+1. A (A) -> C (C): AC (at 1000)
+2. C (C): AC (at 1100)
+> add_train BD B:1100 D:1200
+1. B (B) -> D (D): BD (at 1100)
+2. D (D): BD (at 1200)
+> add_train CD C:1100 D:1200
+1. C (C) -> D (D): CD (at 1100)
+2. D (D): CD (at 1200)
+> add_train DE D:1200 E:1300
+1. D (D) -> E (E): DE (at 1200)
+2. E (E): DE (at 1300)
+> route_shortest_distance A E
+1. A (A) -> C (C) (distance 0)
+2. C (C) -> D (D) (distance 1)
+3. D (D) -> E (E) (distance 3)
+4. E (E) (distance 6)
+> route_shortest_distance A A
+No route found!
+> 

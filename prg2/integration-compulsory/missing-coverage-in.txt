@@ -1,0 +1,14 @@
+clear_all
+# invalid station_id
+add_station Id1 "One" (11,12)
+add_train T1 Id1:0800 Id2:0700
+station_departures_after Id1 0000
+# successful addition with long trip
+add_station Id2 "Two" (11,12)
+add_train T1 Id1:0800 Id2:0700
+# trying to add already existing one
+add_train T1 Id1:0800 Id2:0700
+# testing a train that doesn't leave from a certain station, valid station and train
+train_stations_from Id2 T1
+# testing route from the same station to the station
+route_any Id1 Id1
