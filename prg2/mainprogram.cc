@@ -244,7 +244,7 @@ MainProgram::CmdResult MainProgram::cmd_add_departure(std::ostream& output, Matc
         output << "Train " << trainid << " leaves from station ";
         print_station_brief(stationid, output, false);
         output << " at " << setw(4) << setfill('0') << time << endl;
-//        return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
+        //        return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
         return {};
     }
     else
@@ -286,7 +286,7 @@ MainProgram::CmdResult MainProgram::cmd_remove_departure(std::ostream &output, M
         output << "Removed departure of train " << trainid << " from station ";
         print_station_brief(stationid, output, false);
         output << " at " << setw(4) << setfill('0') << time << endl;
-//        return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
+        //        return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
         return {};
     }
     else
@@ -349,7 +349,7 @@ MainProgram::CmdResult MainProgram::cmd_station_departures_after(std::ostream &o
         output << " after " << time << endl;
     }
 
-//    return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
+    //    return {ResultType::IDLIST, CmdResultIDs{{}, {stationid}}};
     return {};
 }
 
@@ -714,7 +714,11 @@ MainProgram::CmdResult MainProgram::cmd_random_stations(ostream& output, MatchIt
         }
     }
     Stopwatch dummy;
-    add_random_stations_regions_trains(dummy, size);
+    if(!add_random_stations_regions_trains(dummy, size)){
+        output << "Failed to add! There might be some leftover data in Datastructures" <<endl;
+        // no need to make the view dirty, there is some
+        return {};
+    }
 
     output << "Added: " << size << " stations." << endl;
 
@@ -1429,7 +1433,7 @@ string MainProgram::print_region(RegionID id, std::ostream &output, bool nl)
         if (id != NO_REGION)
         {
             auto name = ds_.get_region_name(id);
-//            auto xy = ds_.get_region_coords(id);
+            //            auto xy = ds_.get_region_coords(id);
             if (!name.empty())
             {
                 output << name << ": ";
@@ -1650,7 +1654,7 @@ MainProgram::CmdResult MainProgram::cmd_testread(std::ostream& output, MatchIter
             string heading_expected = "Expected output";
             unsigned int expected_max_length = heading_expected.length();
             auto expected_max_iter = std::max_element(expected_lines.cbegin(), expected_lines.cend(),
-                                                    [](string s1, string s2){ return s1.length() < s2.length(); });
+                                                      [](string s1, string s2){ return s1.length() < s2.length(); });
             if (expected_max_iter != expected_lines.cend())
             {
                 expected_max_length = expected_max_iter->length();
@@ -1865,59 +1869,59 @@ string const perftest_n_values_or_rangex = "([0-9]+(?:(?::[0-9]+){1,2}|(?:;[0-9]
 string const perftest_logx = "(?:[[:space:]]+(log))?";
 
 vector<MainProgram::CmdInfo> MainProgram::cmds_ =
-{
-    {"station_count", "", "", &MainProgram::cmd_station_count, &MainProgram::test_station_count },
-    {"clear_all", "", "", &MainProgram::cmd_clear_all, &MainProgram::test_clear_all },
-    {"all_stations", "", "", &MainProgram::cmd_all_stations, &MainProgram::test_all_stations },
-    {"add_station", "StationID \"Name\" (x,y)", stationidx+wsx+'"'+namex+'"'+wsx+coordx, &MainProgram::cmd_add_station, &MainProgram::test_add_station },
-    {"station_info", "StationID", stationidx, &MainProgram::cmd_station_info, &MainProgram::test_station_info },
-    {"get_station_name", "StationID",stationidx,&MainProgram::cmd_get_station_name,&MainProgram::test_get_station_name},
-    {"get_station_coordinates", "StationID",stationidx,&MainProgram::cmd_get_station_coordinates,&MainProgram::test_get_station_coordinates},
-    {"stations_alphabetically", "", "", &MainProgram::NoParListCmd<&Datastructures::stations_alphabetically>, &MainProgram::test_stations_alphabetically },
-    {"stations_distance_increasing", "", "", &MainProgram::NoParListCmd<&Datastructures::stations_distance_increasing>,
-                                             &MainProgram::test_stations_distance_increasing },
-    {"find_stations_with_coord", "(x,y)", coordx, &MainProgram::cmd_find_stations_with_coord, &MainProgram::test_find_stations_with_coord },
-    {"change_station_coord", "StationID (x,y)", stationidx+wsx+coordx, &MainProgram::cmd_change_station_coord, &MainProgram::test_change_station_coord },
-    {"add_departure", "StationID TrainID Time", stationidx+wsx+trainidx+wsx+timex, &MainProgram::cmd_add_departure, &MainProgram::test_add_departure },
-    {"remove_departure", "StationID TrainID Time", stationidx+wsx+trainidx+wsx+timex, &MainProgram::cmd_remove_departure, &MainProgram::test_remove_departure },
-    {"station_departures_after", "StationID Time", stationidx+wsx+timex, &MainProgram::cmd_station_departures_after, &MainProgram::test_station_departures_after },
-//    {"mindist", "", "", &MainProgram::NoParstationCmd<&Datastructures::min_distance>, &MainProgram::NoParstationTestCmd<&Datastructures::min_distance> },
-//    {"maxdist", "", "", &MainProgram::NoParstationCmd<&Datastructures::max_distance>, &MainProgram::NoParstationTestCmd<&Datastructures::max_distance> },
-    {"add_region", "RegionID \"Name\" (x,y) (x,y)...", regionidx+wsx+'"'+namex+'"'+"((?:"+wsx+optcoordx+")+)", &MainProgram::cmd_add_region, &MainProgram::test_add_region },
-    {"all_regions", "", "", &MainProgram::cmd_all_regions, &MainProgram::test_all_regions },
-    {"region_info", "RegionID", regionidx, &MainProgram::cmd_region_info, &MainProgram::test_region_info },
-    {"get_region_name", "RegionID",regionidx,&MainProgram::cmd_get_region_name,&MainProgram::test_get_region_name},
-    {"get_region_coords", "RegionID",regionidx,&MainProgram::cmd_get_region_coords,&MainProgram::test_get_region_coords},
-    {"add_subregion_to_region", "SubregionID RegionID", regionidx+wsx+regionidx, &MainProgram::cmd_add_subregion_to_region, &MainProgram::test_add_subregion_to_region},
-    {"add_station_to_region", "StationID RegionID", stationidx+wsx+regionidx, &MainProgram::cmd_add_station_to_region, &MainProgram::test_add_station_to_region },
-    {"station_in_regions", "StationID", stationidx, &MainProgram::cmd_station_in_regions, &MainProgram::test_station_in_regions },
-    {"all_subregions_of_region", "RegionID", regionidx, &MainProgram::cmd_all_subregions_of_region, &MainProgram::test_all_subregions_of_region },
-    {"stations_closest_to", "(x,y)", coordx, &MainProgram::cmd_stations_closest_to, &MainProgram::test_stations_closest_to },
-    {"remove_station", "StationID", stationidx, &MainProgram::cmd_remove_station, &MainProgram::test_remove_station },
-    {"common_ancestor_of_regions", "RegionID1 RegionID2", regionidx+wsx+regionidx, &MainProgram::cmd_common_ancestor_of_regions, &MainProgram::test_common_ancestor_of_regions },
-    {"quit", "", "", nullptr, nullptr },
-    {"help", "", "", &MainProgram::help_command, nullptr },
-    {"random_add", "number_of_stations_to_add  (minx,miny) (maxx,maxy) (coordinates optional)",
-     numx+"(?:"+wsx+coordx+wsx+coordx+")?", &MainProgram::cmd_random_stations, &MainProgram::test_random_stations },
-    {"read", "\"in-filename\" [silent]", "\"([-a-zA-Z0-9 ./:_]+)\"(?:"+wsx+"(silent))?", &MainProgram::cmd_read, nullptr },
-    {"testread", "\"in-filename\" \"out-filename\"", "\"([-a-zA-Z0-9 ./:_]+)\""+wsx+"\"([-a-zA-Z0-9 ./:_]+)\"", &MainProgram::cmd_testread, nullptr },
-    {"perftest", "[REPEAT*]cmd1[;[REPEAT*]cmd2...][:[REPEAT*]extracmd1[;[REPEAT*]extracmd2...]:extra_every_n_test_entry] timeout[:extra_timeout] range_start:range_end[:step]|n1[;n2...] [log] (parts in [] are optional)",
-     perftest_cmds_listx+wsx+perftest_timeoutx+wsx+perftest_n_values_or_rangex+perftest_logx, &MainProgram::cmd_perftest, nullptr },
-    {"stopwatch", "on|off|next (alternatives separated by |)", "(?:(on)|(off)|(next))", &MainProgram::cmd_stopwatch, nullptr },
-    {"random_seed", "new-random-seed-integer", numx, &MainProgram::cmd_randseed, nullptr },
-    {"#", "comment text", ".*", &MainProgram::cmd_comment, nullptr },
-    // prg2 commands
-    {"add_train", "TrainID StationID1:Time1 ... StationIDlast:Timelast", trainidx+"((?:"+wsx+optstationtimeidx+")+)", &MainProgram::cmd_add_train, &MainProgram::test_add_train },
-    {"next_stations_from", "StationID", stationidx, &MainProgram::cmd_next_stations_from, &MainProgram::test_next_stations_from },
-    {"train_stations_from", "StationID TrainID", stationidx+wsx+trainidx, &MainProgram::cmd_train_stations_from, &MainProgram::test_train_stations_from},
-    {"clear_trains", "", "", &MainProgram::cmd_clear_trains, &MainProgram::test_clear_trains },
-    {"route_any", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_any, &MainProgram::test_route_any},
-    {"route_least_stations", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_least_stations, &MainProgram::test_route_least_stations},
-    {"route_with_cycle", "StationID", stationidx, &MainProgram::cmd_route_with_cycle, &MainProgram::test_route_with_cycle },
-    {"route_shortest_distance", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_shortest_distance, &MainProgram::test_route_shortest_distance},
-    {"route_earliest_arrival", "StationID StationID StartTime", stationidx+wsx+stationidx+wsx+timex, &MainProgram::cmd_route_earliest_arrival, &MainProgram::test_route_earliest_arrival},
+    {
+        {"station_count", "", "", &MainProgram::cmd_station_count, &MainProgram::test_station_count },
+        {"clear_all", "", "", &MainProgram::cmd_clear_all, &MainProgram::test_clear_all },
+        {"all_stations", "", "", &MainProgram::cmd_all_stations, &MainProgram::test_all_stations },
+        {"add_station", "StationID \"Name\" (x,y)", stationidx+wsx+'"'+namex+'"'+wsx+coordx, &MainProgram::cmd_add_station, &MainProgram::test_add_station },
+        {"station_info", "StationID", stationidx, &MainProgram::cmd_station_info, &MainProgram::test_station_info },
+        {"get_station_name", "StationID",stationidx,&MainProgram::cmd_get_station_name,&MainProgram::test_get_station_name},
+        {"get_station_coordinates", "StationID",stationidx,&MainProgram::cmd_get_station_coordinates,&MainProgram::test_get_station_coordinates},
+        {"stations_alphabetically", "", "", &MainProgram::NoParListCmd<&Datastructures::stations_alphabetically>, &MainProgram::test_stations_alphabetically },
+        {"stations_distance_increasing", "", "", &MainProgram::NoParListCmd<&Datastructures::stations_distance_increasing>,
+         &MainProgram::test_stations_distance_increasing },
+        {"find_stations_with_coord", "(x,y)", coordx, &MainProgram::cmd_find_stations_with_coord, &MainProgram::test_find_stations_with_coord },
+        {"change_station_coord", "StationID (x,y)", stationidx+wsx+coordx, &MainProgram::cmd_change_station_coord, &MainProgram::test_change_station_coord },
+        {"add_departure", "StationID TrainID Time", stationidx+wsx+trainidx+wsx+timex, &MainProgram::cmd_add_departure, &MainProgram::test_add_departure },
+        {"remove_departure", "StationID TrainID Time", stationidx+wsx+trainidx+wsx+timex, &MainProgram::cmd_remove_departure, &MainProgram::test_remove_departure },
+        {"station_departures_after", "StationID Time", stationidx+wsx+timex, &MainProgram::cmd_station_departures_after, &MainProgram::test_station_departures_after },
+        //    {"mindist", "", "", &MainProgram::NoParstationCmd<&Datastructures::min_distance>, &MainProgram::NoParstationTestCmd<&Datastructures::min_distance> },
+        //    {"maxdist", "", "", &MainProgram::NoParstationCmd<&Datastructures::max_distance>, &MainProgram::NoParstationTestCmd<&Datastructures::max_distance> },
+        {"add_region", "RegionID \"Name\" (x,y) (x,y)...", regionidx+wsx+'"'+namex+'"'+"((?:"+wsx+optcoordx+")+)", &MainProgram::cmd_add_region, &MainProgram::test_add_region },
+        {"all_regions", "", "", &MainProgram::cmd_all_regions, &MainProgram::test_all_regions },
+        {"region_info", "RegionID", regionidx, &MainProgram::cmd_region_info, &MainProgram::test_region_info },
+        {"get_region_name", "RegionID",regionidx,&MainProgram::cmd_get_region_name,&MainProgram::test_get_region_name},
+        {"get_region_coords", "RegionID",regionidx,&MainProgram::cmd_get_region_coords,&MainProgram::test_get_region_coords},
+        {"add_subregion_to_region", "SubregionID RegionID", regionidx+wsx+regionidx, &MainProgram::cmd_add_subregion_to_region, &MainProgram::test_add_subregion_to_region},
+        {"add_station_to_region", "StationID RegionID", stationidx+wsx+regionidx, &MainProgram::cmd_add_station_to_region, &MainProgram::test_add_station_to_region },
+        {"station_in_regions", "StationID", stationidx, &MainProgram::cmd_station_in_regions, &MainProgram::test_station_in_regions },
+        {"all_subregions_of_region", "RegionID", regionidx, &MainProgram::cmd_all_subregions_of_region, &MainProgram::test_all_subregions_of_region },
+        {"stations_closest_to", "(x,y)", coordx, &MainProgram::cmd_stations_closest_to, &MainProgram::test_stations_closest_to },
+        {"remove_station", "StationID", stationidx, &MainProgram::cmd_remove_station, &MainProgram::test_remove_station },
+        {"common_ancestor_of_regions", "RegionID1 RegionID2", regionidx+wsx+regionidx, &MainProgram::cmd_common_ancestor_of_regions, &MainProgram::test_common_ancestor_of_regions },
+        {"quit", "", "", nullptr, nullptr },
+        {"help", "", "", &MainProgram::help_command, nullptr },
+        {"random_add", "number_of_stations_to_add  (minx,miny) (maxx,maxy) (coordinates optional)",
+         numx+"(?:"+wsx+coordx+wsx+coordx+")?", &MainProgram::cmd_random_stations, &MainProgram::test_random_stations },
+        {"read", "\"in-filename\" [silent]", "\"([-a-zA-Z0-9 ./:_]+)\"(?:"+wsx+"(silent))?", &MainProgram::cmd_read, nullptr },
+        {"testread", "\"in-filename\" \"out-filename\"", "\"([-a-zA-Z0-9 ./:_]+)\""+wsx+"\"([-a-zA-Z0-9 ./:_]+)\"", &MainProgram::cmd_testread, nullptr },
+        {"perftest", "[REPEAT*]cmd1[;[REPEAT*]cmd2...][:[REPEAT*]extracmd1[;[REPEAT*]extracmd2...]:extra_every_n_test_entry] timeout[:extra_timeout] range_start:range_end[:step]|n1[;n2...] [log] (parts in [] are optional)",
+         perftest_cmds_listx+wsx+perftest_timeoutx+wsx+perftest_n_values_or_rangex+perftest_logx, &MainProgram::cmd_perftest, nullptr },
+        {"stopwatch", "on|off|next (alternatives separated by |)", "(?:(on)|(off)|(next))", &MainProgram::cmd_stopwatch, nullptr },
+        {"random_seed", "new-random-seed-integer", numx, &MainProgram::cmd_randseed, nullptr },
+        {"#", "comment text", ".*", &MainProgram::cmd_comment, nullptr },
+        // prg2 commands
+        {"add_train", "TrainID StationID1:Time1 ... StationIDlast:Timelast", trainidx+"((?:"+wsx+optstationtimeidx+")+)", &MainProgram::cmd_add_train, &MainProgram::test_add_train },
+        {"next_stations_from", "StationID", stationidx, &MainProgram::cmd_next_stations_from, &MainProgram::test_next_stations_from },
+        {"train_stations_from", "StationID TrainID", stationidx+wsx+trainidx, &MainProgram::cmd_train_stations_from, &MainProgram::test_train_stations_from},
+        {"clear_trains", "", "", &MainProgram::cmd_clear_trains, &MainProgram::test_clear_trains },
+        {"route_any", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_any, &MainProgram::test_route_any},
+        {"route_least_stations", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_least_stations, &MainProgram::test_route_least_stations},
+        {"route_with_cycle", "StationID", stationidx, &MainProgram::cmd_route_with_cycle, &MainProgram::test_route_with_cycle },
+        {"route_shortest_distance", "StationID StationID", stationidx+wsx+stationidx, &MainProgram::cmd_route_shortest_distance, &MainProgram::test_route_shortest_distance},
+        {"route_earliest_arrival", "StationID StationID StartTime", stationidx+wsx+stationidx+wsx+timex, &MainProgram::cmd_route_earliest_arrival, &MainProgram::test_route_earliest_arrival},
 
-};
+        };
 /*
  * regex cmds;cmds:cmds;cmds
  * ([0-9a-zA-Z_]+(?:;[0-9a-zA-Z_]+)*(?:(?::[0-9a-zA-Z_]+)(?:;[0-9a-zA-Z_]+)*)?)
@@ -2151,8 +2155,12 @@ MainProgram::CmdResult MainProgram::cmd_perftest(std::ostream& output, MatchIter
             // modify the add to work and add correct number of things also with lower n values
             for (unsigned int i = 0; i < n / 1000; ++i)
             {
-                // TODO check return value
-                add_random_stations_regions_trains(stopwatch,1000);
+                if(!add_random_stations_regions_trains(stopwatch,1000)){
+                    output << "Adding stations, regions and trains failed!" << endl;
+                    stop=true;
+                    break;
+                }
+
 
                 if (stopwatch.elapsed() >= timeouts[0])
                 {
@@ -2171,8 +2179,12 @@ MainProgram::CmdResult MainProgram::cmd_perftest(std::ostream& output, MatchIter
 
             if (n % 1000 != 0)
             {
-                // TODO check return value
-                add_random_stations_regions_trains(stopwatch,n % 1000);
+                if(!add_random_stations_regions_trains(stopwatch,n % 1000)){
+                    output << "Adding stations, regions and trains failed!" << endl;
+                    stop=true;
+                    break;
+                }
+
             }
 
 #ifdef USE_PERF_EVENT
@@ -2655,90 +2667,90 @@ bool MainProgram::command_parse_line(string inputline, ostream& output)
 
                 switch (result.first)
                 {
-                    case ResultType::NOTHING:
+                case ResultType::NOTHING:
+                {
+                    break;
+                }
+                case ResultType::IDLIST:
+                {
+                    auto& [regions, stations] = std::get<CmdResultIDs>(result.second);
+                    if (stations.size() == 1 && stations.front() == NO_STATION)
                     {
-                        break;
+                        output << "Failed (NO_STATION returned)!" << std::endl;
                     }
-                    case ResultType::IDLIST:
+                    else
                     {
-                        auto& [regions, stations] = std::get<CmdResultIDs>(result.second);
-                        if (stations.size() == 1 && stations.front() == NO_STATION)
+                        if (!stations.empty())
                         {
-                            output << "Failed (NO_STATION returned)!" << std::endl;
-                        }
-                        else
-                        {
-                            if (!stations.empty())
-                            {
-                                if (stations.size() == 1) { output << "Station:" << std::endl; }
-                                else { output << "Stations:" << std::endl; }
+                            if (stations.size() == 1) { output << "Station:" << std::endl; }
+                            else { output << "Stations:" << std::endl; }
 
-                                unsigned int num = 0;
-                                for (StationID id : stations)
-                                {
-                                    ++num;
-                                    if (stations.size() > 1) { output << num << ". "; }
-                                    else { output << "   "; }
-                                    print_station(id, output);
-                                }
+                            unsigned int num = 0;
+                            for (StationID id : stations)
+                            {
+                                ++num;
+                                if (stations.size() > 1) { output << num << ". "; }
+                                else { output << "   "; }
+                                print_station(id, output);
                             }
                         }
+                    }
 
-                        if (regions.size() == 1 && regions.front() == NO_REGION)
+                    if (regions.size() == 1 && regions.front() == NO_REGION)
+                    {
+                        output << "Failed (NO_REGION returned)!" << std::endl;
+                    }
+                    else
+                    {
+                        if (!regions.empty())
                         {
-                            output << "Failed (NO_REGION returned)!" << std::endl;
-                        }
-                        else
-                        {
-                            if (!regions.empty())
+                            if (regions.size() == 1) { output << "Region:" << std::endl; }
+                            else { output << "Regions:" << std::endl; }
+
+                            unsigned int num = 0;
+                            for (RegionID id : regions)
                             {
-                                if (regions.size() == 1) { output << "Region:" << std::endl; }
-                                else { output << "Regions:" << std::endl; }
-
-                                unsigned int num = 0;
-                                for (RegionID id : regions)
-                                {
-                                    ++num;
-                                    if (regions.size() > 1) { output << num << ". "; }
-                                    else { output << "   "; }
-                                    print_region(id, output);
-                                }
+                                ++num;
+                                if (regions.size() > 1) { output << num << ". "; }
+                                else { output << "   "; }
+                                print_region(id, output);
                             }
                         }
+                    }
+                    break;
+                }
+                case ResultType::NAMELIST: {
+                    auto& resulttype = std::get<CmdResultNames>(result.second);
+                    auto& sid = resulttype.first.first;
+                    auto rid = convert_to_string(resulttype.first.second);
+                    auto& name = resulttype.second;
+                    std::string type = sid!=NO_STATION? "station":"region";
+                    if (name == NO_NAME)
+                    {
+                        output << "Failed (NO_NAME returned)!" << std::endl;
                         break;
                     }
-                    case ResultType::NAMELIST: {
-                        auto& resulttype = std::get<CmdResultNames>(result.second);
-                        auto& sid = resulttype.first.first;
-                        auto rid = convert_to_string(resulttype.first.second);
-                        auto& name = resulttype.second;
-                        std::string type = sid!=NO_STATION? "station":"region";
-                        if (name == NO_NAME)
-                        {
-                            output << "Failed (NO_NAME returned)!" << std::endl;
-                            break;
-                        }
-                        output << "Name for "<<type<<" with id" << (sid!=NO_STATION? sid:rid);
-                        output <<" is " << name<<endl;
+                    output << "Name for "<<type<<" with id" << (sid!=NO_STATION? sid:rid);
+                    output <<" is " << name<<endl;
+                    break;
+                }
+                case ResultType::COORDLIST: {
+                    auto& resulttype = std::get<CmdResultCoords>(result.second);
+                    auto& sid = resulttype.first.first;
+                    auto rid = convert_to_string(resulttype.first.second);
+                    auto& coordlist = resulttype.second;
+                    std::string type = sid!=NO_STATION? "Station":"Region";
+                    if (coordlist.size()==1 && coordlist.front()==NO_COORD){
+                        output << "Failed (NO_COORD returned)!" << std::endl;
                         break;
                     }
-                    case ResultType::COORDLIST: {
-                        auto& resulttype = std::get<CmdResultCoords>(result.second);
-                        auto& sid = resulttype.first.first;
-                        auto rid = convert_to_string(resulttype.first.second);
-                        auto& coordlist = resulttype.second;
-                        std::string type = sid!=NO_STATION? "Station":"Region";
-                        if (coordlist.size()==1 && coordlist.front()==NO_COORD){
-                            output << "Failed (NO_COORD returned)!" << std::endl;
-                            break;
-                        }
-                        output << type << (sid!=NO_STATION? sid:rid);
-                        output <<" has coordinates"<<endl;
-                        for (const auto& coord : coordlist){
-                            print_coord(coord, output);
-                        }
-                        break;
+                    output << type << (sid!=NO_STATION? sid:rid);
+                    output <<" has coordinates"<<endl;
+                    for (const auto& coord : coordlist){
+                        print_coord(coord, output);
                     }
+                    break;
+                }
                 case ResultType::ROUTE:
                 {
                     auto& route = std::get<CmdResultRoute>(result.second);
@@ -2881,7 +2893,7 @@ void MainProgram::command_parser(istream& input, ostream& output, PromptStyle pr
     string line;
     do
     {
-//        output << string(nesting_level, '>') << " ";
+        //        output << string(nesting_level, '>') << " ";
         output << PROMPT;
         getline(input, line, '\n');
 
