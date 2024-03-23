@@ -3,7 +3,7 @@
 #include "datastructures.hh"
 
 #include <random>
-
+#include <cmath>
 std::minstd_rand rand_engine; // Reasonably quick pseudo-random generator
 
 template <typename Type>
@@ -36,37 +36,87 @@ Datastructures::~Datastructures()
 unsigned int Datastructures::station_count()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("station_count()");
+    return map_of_stationID.size();
+    // throw NotImplemented("station_count()");
 }
 
 void Datastructures::clear_all()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("clear_all()");
+    map_of_stationID.clear();
+    map_of_regionID.clear();
+    set_of_station_names.clear();
+    map_of_station_coord.clear();
+
+    sorted_Id_Alphabetically.clear();
+    sorted_Id_Distance.clear();
+    multimap_of_station_train_id.clear();
+    // throw NotImplemented("clear_all()");
 }
 
 std::vector<StationID> Datastructures::all_stations()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("all_stations()");
+    std::vector<StationID> vectorOfId;
+    vectorOfId.reserve(map_of_stationID.size());
+    std::transform(map_of_stationID.begin(), map_of_stationID.end(), std::back_inserter(vectorOfId),
+              [](const std::pair<StationID, Station_struct>& pair) {
+                 return pair.first;
+              });
+    return vectorOfId;
+    // throw NotImplemented("all_stations()");
 }
 
-bool Datastructures::add_station(StationID /*id*/, const Name& /*name*/, Coord /*xy*/)
+bool Datastructures::add_station(StationID id, const Name& name, Coord xy)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("add_station()");
+    if (map_of_stationID.find(id) == map_of_stationID.end()) {
+        // not found
+        Affilation_struct temp_aff;
+        temp_aff.stationid = id;
+        temp_aff.name = name;
+        temp_aff.location = xy;
+
+        map_of_stationID.insert({id, temp_aff});
+
+        set_of_station_names.insert({name, id});
+        map_of_station_coord.insert({xy,id});
+        is_latest_station_sortedValid = false;
+        is_latest_station_sortedAlphabeticallyValid = false;
+        return true;
+    } else {
+        // found
+        return false;
+    }
+    //throw NotImplemented("add_station()");
 }
 
-Name Datastructures::get_station_name(StationID /*id*/)
+Name Datastructures::get_station_name(StationID id)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("get_station_name()");
+    auto search = map_of_stationID.find(id);
+    if (search == map_of_stationID.end()) {
+        // not found
+        return NO_NAME;
+    } else {
+        // found
+        return search->second.name;
+    }
+    // throw NotImplemented("get_station_name()");
 }
 
 Coord Datastructures::get_station_coordinates(StationID /*id*/)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("get_station_coordinates()");
+    auto search = map_of_stationID.find(id);
+    if (search == map_of_stationID.end()) {
+        // not found
+        return NO_COORD;
+    } else {
+        // found
+        return search->second.location;
+    }
+    // throw NotImplemented("get_station_coordinates()");
 }
 
 std::vector<StationID> Datastructures::stations_alphabetically()
