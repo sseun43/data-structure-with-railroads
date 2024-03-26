@@ -1,4 +1,8 @@
 // Datastructures.hh
+//
+// Student name: Oluwaseun Akangbe
+// Student email: oluwaseun.akangbe@tuni.fi
+// Student number: 150474395
 
 #ifndef DATASTRUCTURES_HH
 #define DATASTRUCTURES_HH
@@ -6,7 +10,107 @@
 #include <vector>
 #include <utility>
 
+
 // Add your own STL includes below this comment
+
+// my code
+#include <string>
+#include <tuple>
+#include <limits>
+#include <functional>
+#include <exception>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <cmath>
+
+struct Station_struct { 
+  StationID stationid;
+  Name name;
+  Coord location;
+};
+
+class Region {
+public:
+  Region(RegionID id_in, Name title_in, std::vector<StationID> stations_in, std::vector<Coord> regionShapeCoords regionShapeCoords_in) {
+    std::unordered_set<StationID> myset(stations_in.begin(), stations_in.end());
+    id = id_in;
+    regionShapeCoords = regionShapeCoords_in
+    title = title_in;
+    region_stations = myset;
+  }
+
+  RegionID getId() {
+    return id;
+  }
+
+  Name getTitle() {
+    return title;
+  }
+
+
+  void addReference(Region* reference) {
+    references.push_back(reference);
+  }
+
+  void add_station(StationID station_id) {
+    region_stations.insert(station_id);
+  }
+
+  void remove_station(StationID station_id) {
+    region_stations.erase(station_id);
+  }
+
+  void addParent(Region* parentToAdd){
+      parent = parentToAdd;
+  }
+
+  std::vector<Region*> getReferences() {
+    return references;
+  }
+
+  std::vector<StationID> getRegStations() {
+      std::vector<StationID> vec(region_stations.begin(), region_stations.end());
+      return vec;
+  }
+
+  Region* getParent(){
+      return parent;
+  }
+
+  void clearReference(){
+      for (auto p : references) {
+          (*p).removeParent();
+      }
+      references.clear();
+  }
+
+  void removeParent(){
+      parent = nullptr;
+  }
+
+private:
+  RegionID id;
+  Name title;
+  std::vector<Coord> regionShapeCoords;
+  std::unordered_set<StationID> region_stations;
+  std::vector<Region*> references;
+  Region* parent = nullptr;
+};
+
+struct CompareCoordinates {
+   bool operator()(Coord c1, Coord c2) const {
+       double distanceA = std::abs(c1.x) + std::abs(c1.y);
+       double distanceB = std::abs(c2.x) + std::abs(c2.y);
+
+       if (distanceA == distanceB) {
+           return c1.y < c2.y;
+       }
+
+       return distanceA < distanceB;
+   }
+};
 
 // Add your own STL includes above this comment
 
@@ -124,7 +228,18 @@ public:
 
 private:
     // Add stuff needed for your class implementation here
+    std::multiset<std::pair<Name, StationID>> set_of_station_names;
+    std::map<Coord, StationID, CompareCoordinates> map_of_station_coord;
+    std::unordered_map<StationID, Station_struct> map_of_stationID;
+    std::vector<StationID> sorted_Id_Alphabetically;
+    std::vector<StationID> sorted_Id_Distance;
+    std::vector<std::pair<Coord, StationID>> vector_of_station_coord;
+    bool is_latest_station_sortedValid = false;
+    bool is_latest_station_sortedAlphabeticallyValid = false;
 
+    std::unordered_map<RegionID, Region> map_of_regionID;
+    std::unordered_multimap<StationID, std::pair<Time, TrainID>> multimap_of_station_train_id;
+    void get_all_references_helper(Region node, std::vector<RegionID>& referenceListToUpdate);
 };
 
 #endif // DATASTRUCTURES_HH

@@ -15,4 +15,13 @@ using namespace std;
 void printEverySecond(const list<int>& lst)
 {
     // ADD YOUR CODE HERE
+    auto iterator = lst.begin();
+    while (std::distance(iterator, lst.end()) > 1) {
+        std::cout << *iterator << ' ';
+        std::advance(iterator, 2);
+    }
+    if(std::distance(iterator, lst.end()) == 1) {
+        std::cout << *iterator << ' ';
+    }
+    std::cout << '\n';
 }
