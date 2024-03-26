@@ -122,13 +122,37 @@ Coord Datastructures::get_station_coordinates(StationID id)
 std::vector<StationID> Datastructures::stations_alphabetically()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("stations_alphabetically()");
+    unsigned int latest_station_count = map_of_stationID.size();
+    if (is_latest_station_sortedAlphabeticallyValid == false){
+        std::vector<StationID> vectorOfId;
+        vectorOfId.reserve(latest_station_count);
+        std::transform(set_of_station_names.begin(), set_of_station_names.end(), std::back_inserter(vectorOfId), 
+        [](const std::pair<Name, StationID>& pair) { return pair.second; });
+
+        is_latest_station_sortedAlphabeticallyValid = true;
+        sorted_Id_Alphabetically = vectorOfId;
+    }
+
+    return sorted_Id_Alphabetically;
+    //throw NotImplemented("stations_alphabetically()");
 }
 
 std::vector<StationID> Datastructures::stations_distance_increasing()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("stations_distance_increasing()");
+    unsigned int latest_station_count = map_of_stationID.size();
+    if (is_latest_station_sortedValid == false){
+        std::vector<StationID> vectorOfId;
+        vectorOfId.reserve(latest_station_count);
+        std::transform(map_of_station_coord.begin(), map_of_station_coord.end(), std::back_inserter(vectorOfId),
+        [](const std::pair<Coord, StationID>& p) { return p.second; });
+
+        sorted_Id_Distance = vectorOfId;
+        is_latest_station_sortedValid = true;
+    }
+
+    return sorted_Id_Distance;
+    //throw NotImplemented("stations_distance_increasing()");
 }
 
 std::vector<StationID> Datastructures::find_stations_with_coord(Coord /*xy*/)
