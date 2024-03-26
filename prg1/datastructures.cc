@@ -72,7 +72,7 @@ bool Datastructures::add_station(StationID id, const Name& name, Coord xy)
     // Replace the line below with your implementation
     if (map_of_stationID.find(id) == map_of_stationID.end()) {
         // not found
-        Affilation_struct temp_aff;
+        Station_struct temp_aff;
         temp_aff.stationid = id;
         temp_aff.name = name;
         temp_aff.location = xy;
@@ -105,7 +105,7 @@ Name Datastructures::get_station_name(StationID id)
     // throw NotImplemented("get_station_name()");
 }
 
-Coord Datastructures::get_station_coordinates(StationID /*id*/)
+Coord Datastructures::get_station_coordinates(StationID id)
 {
     // Replace the line below with your implementation
     auto search = map_of_stationID.find(id);
