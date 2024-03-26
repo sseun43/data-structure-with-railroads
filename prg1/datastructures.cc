@@ -113,7 +113,7 @@ Coord Datastructures::get_station_coordinates(StationID /*id*/)
         // not found
         return NO_COORD;
     } else {
-        // found
+        // when it is not found
         return search->second.location;
     }
     // throw NotImplemented("get_station_coordinates()");
