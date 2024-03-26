@@ -10,6 +10,7 @@
 #include <vector>
 #include <utility>
 
+#include "customtypes.hh"
 
 // Add your own STL includes below this comment
 
@@ -113,8 +114,6 @@ struct CompareCoordinates {
 };
 
 // Add your own STL includes above this comment
-
-#include "customtypes.hh"
 
 // This is the class you are supposed to implement
 
