@@ -23,6 +23,12 @@ Type random_in_range(Type start, Type end)
 // warning about unused parameters on operations you haven't yet implemented.)
 // You may add your own functions here
 
+bool compare_time_TrainID(const std::pair<Time, TrainID>& p1, const std::pair<Time, TrainID>& p2) {
+    if (p1.first < p2.first) return true;
+    else if (p1.first > p2.first) return false;
+    else return p1.second < p2.second;
+}
+
 Datastructures::Datastructures()
 {
     // Write any initialization you need here
@@ -155,34 +161,111 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
     //throw NotImplemented("stations_distance_increasing()");
 }
 
-std::vector<StationID> Datastructures::find_stations_with_coord(Coord /*xy*/)
+std::vector<StationID> Datastructures::find_stations_with_coord(Coord xy)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("find_stations_with_coord()");
+    auto search = map_of_station_coord.find(xy);
+    if (search == map_of_station_coord.end()) {
+        // not found
+        return NO_STATION;
+    } else {
+        // found
+        return search->second;
+    }
+    //throw NotImplemented("find_stations_with_coord()");
 }
 
-bool Datastructures::change_station_coord(StationID /*id*/, Coord /*newcoord*/)
+bool Datastructures::change_station_coord(StationID id, Coord newcoord)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("change_station_coord()");
+    auto search = map_of_stationID.find(id);
+    if (search == map_of_stationID.end()) {
+        // not found
+        return false;
+    } else {
+        // found
+        Station_struct old_aff = search->second;
+        map_of_station_coord.erase(old_aff.location); // removable to improve time efficiency
+        map_of_station_coord[newcoord] = id;
+
+        old_aff.location = newcoord;
+        map_of_stationID[id] = old_aff;
+        is_latest_station_sortedValid = false;
+        return true;
+    }    
+    //throw NotImplemented("change_station_coord()");
 }
 
-bool Datastructures::add_departure(StationID /*stationid*/, TrainID /*trainid*/, Time /*time*/)
+bool Datastructures::add_departure(StationID stationid, TrainID trainid, Time time)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("add_departure()");
+    if (map_of_stationID.find(stationid) == map_of_stationID.end()) {
+        // not found
+        return false;
+    } else {
+        // found
+        // need to check if trainId is present and time is 
+        auto range = multimap_of_station_train_id.equal_range(stationid);
+        for (auto it = range.first; it != range.second; ++it){
+            if(it->second == {time, trainid}){
+                return false;
+            }
+        }
+        multimap_of_station_train_id.insert({stationid, {time, trainid}});        
+        return true;
+        
+    }
+    // throw NotImplemented("add_departure()");
 }
 
-bool Datastructures::remove_departure(StationID /*stationid*/, TrainID /*trainid*/, Time /*time*/)
+bool Datastructures::remove_departure(StationID stationid, TrainID trainid, Time time)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("remove_departure()");
+    if (map_of_stationID.find(stationid) == map_of_stationID.end()) {
+        // not found
+        return false;
+    } else {
+        // found
+        // need to check if trainId is present and time is 
+        auto range = multimap_of_station_train_id.equal_range(stationid);
+        for (auto it = range.first; it != range.second; ++it){
+            if(it->second == {time, trainid}){
+                //erase
+                multimap_of_station_train_id.erase(it);
+                return true;
+            }
+        }
+        multimap_of_station_train_id.insert({stationid, {time, trainid}});        
+        return true;
+        
+    }
+    // throw NotImplemented("remove_departure()");
 }
 
-std::vector<std::pair<Time, TrainID>> Datastructures::station_departures_after(StationID /*stationid*/, Time /*time*/)
+std::vector<std::pair<Time, TrainID>> Datastructures::station_departures_after(StationID stationid, Time time)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("station_departures_after()");
+    auto search = multimap_of_station_train_id.find(stationid);
+    if (search == multimap_of_station_train_id.end()) {
+        // not found
+        return {{NO_TIME, NO_TRAIN}};
+    } else {
+        // found
+        // use equal range
+        auto range = multimap_of_station_train_id.equal_range(stationid);
+        std::vector<std::pair<Time, TrainID>> vectorOfId;
+        vectorOfId.reserve((std::distance(range.first, range.second)));
+
+        for (auto it = range.first; it != range.second; ++it){
+            // std::cout << it->first << ' ' << it->second.first << '\n';
+            if(it->second.first >= time) {
+                vectorOfId.push_back(it->second);
+            }
+        }
+        std::sort(vectorOfId.begin(),vectorOfId.end(), compare_time_TrainID);
+        return vectorOfId;
+    }
+    // throw NotImplemented("station_departures_after()");
 }
 
 bool Datastructures::add_region(RegionID /*id*/, const Name &/*name*/, std::vector<Coord> /*coords*/)
