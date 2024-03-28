@@ -268,39 +268,95 @@ std::vector<std::pair<Time, TrainID>> Datastructures::station_departures_after(S
     // throw NotImplemented("station_departures_after()");
 }
 
-bool Datastructures::add_region(RegionID /*id*/, const Name &/*name*/, std::vector<Coord> /*coords*/)
+bool Datastructures::add_region(RegionID id, const Name & name, std::vector<Coord> coords)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("add_region()");
+    if (map_of_regionID.find(id) == map_of_regionID.end()) {
+        // not found
+        Region newRegion(id, name, coords);
+        map_of_regionID.insert({id, newRegion}); // i dont need to use new;
+        // for (AffiliationID affilation_id : affiliations) {
+        //     multimap_of_affilation_publication_id.insert({affilation_id, {id, year}});
+        // }         
+        return true;
+    } else {
+        // found
+        return false;
+    }
+    // throw NotImplemented("add_region()");
 }
 
 std::vector<RegionID> Datastructures::all_regions()
 {
     // Replace the line below with your implementation
-    throw NotImplemented("all_regions()");
+    std::vector<RegionID> vectorOfId;
+    vectorOfId.reserve(map_of_regionID.size());
+    std::transform(map_of_regionID.begin(), map_of_regionID.end(), std::back_inserter(vectorOfId),
+              [](const std::pair<RegionID, Region>& pair) {
+                 return pair.first;
+              });
+    return vectorOfId;
+    // throw NotImplemented("all_regions()");
 }
 
-Name Datastructures::get_region_name(RegionID /*id*/)
+Name Datastructures::get_region_name(RegionID id)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("get_region_name()");
+    auto search = map_of_regionID.find(id);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return NO_NAME;
+    } else {
+        // found
+        return search->second.getTitle();
+    }
+    // throw NotImplemented("get_region_name()");
 }
 
-std::vector<Coord> Datastructures::get_region_coords(RegionID /*id*/)
+std::vector<Coord> Datastructures::get_region_coords(RegionID id)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("get_region_coords()");
+    auto search = map_of_regionID.find(id);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return NO_COORD;
+    } else {
+        // found
+        return search->second.getCoords();
+    }
+    // throw NotImplemented("get_region_coords()");
 }
 
-bool Datastructures::add_subregion_to_region(RegionID /*id*/, RegionID /*parentid*/)
+bool Datastructures::add_subregion_to_region(RegionID id, RegionID parentid)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("add_subregion_to_region()");
+    auto search_parent = map_of_regionID.find(parentid);
+    auto search_child = map_of_regionID.find(id);
+    if (search_parent == map_of_regionID.end() || search_child == map_of_regionID.end()) {
+        // not found
+        return false;
+    } else {
+        // found
+        search_parent->second.addReference(&(search_child->second));
+        search_child->second.addParent(&(search_parent->second));
+        return true;
+    }
+    // throw NotImplemented("add_subregion_to_region()");
 }
 
-bool Datastructures::add_station_to_region(StationID /*id*/, RegionID /*parentid*/)
+bool Datastructures::add_station_to_region(StationID id, RegionID parentid)
 {
     // Replace the line below with your implementation
+    auto search = map_of_regionID.find(parentid);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return false;
+    } else {
+        // found
+        search->second.add_station(id);
+        // multimap_of_station_train_id.insert({id, {search->second.getYear(), search->second.getId()}});
+        return true;
+    }   
     throw NotImplemented("add_station_to_region()");
 }
 

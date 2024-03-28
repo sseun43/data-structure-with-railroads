@@ -34,7 +34,7 @@ struct Station_struct {
 
 class Region {
 public:
-  Region(RegionID id_in, Name title_in, std::vector<StationID> stations_in, std::vector<Coord> regionShapeCoords_in) {
+  Region(RegionID id_in, Name title_in, std::vector<Coord> regionShapeCoords_in, std::vector<StationID> stations_in = {}) {
     std::unordered_set<StationID> myset(stations_in.begin(), stations_in.end());
     id = id_in;
     regionShapeCoords = regionShapeCoords_in;
@@ -50,6 +50,9 @@ public:
     return title;
   }
 
+  std::vector<Coord> getCoords() {
+    return regionShapeCoords;
+  }
 
   void addReference(Region* reference) {
     references.push_back(reference);
