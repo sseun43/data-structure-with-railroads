@@ -240,8 +240,10 @@ private:
     bool is_latest_station_sortedAlphabeticallyValid = false;
 
     std::unordered_map<RegionID, Region> map_of_regionID;
+    std::unordered_map<StationID, RegionID> map_of_station_region_id;
     std::unordered_multimap<StationID, std::pair<Time, TrainID>> multimap_of_station_train_id;
     void get_all_references_helper(Region node, std::vector<RegionID>& referenceListToUpdate);
+    RegionID get_parent(RegionID id);
 };
 
 #endif // DATASTRUCTURES_HH

@@ -354,16 +354,54 @@ bool Datastructures::add_station_to_region(StationID id, RegionID parentid)
     } else {
         // found
         search->second.add_station(id);
-        // multimap_of_station_train_id.insert({id, {search->second.getYear(), search->second.getId()}});
+        map_of_station_region_id.insert({parentid, id});
         return true;
     }   
     throw NotImplemented("add_station_to_region()");
 }
 
-std::vector<RegionID> Datastructures::station_in_regions(StationID /*id*/)
+RegionID Datastructures::get_parent(RegionID id)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("station_in_regions()");
+    auto search = map_of_regionID.find(id);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return NO_REGION;
+    } else {
+        // found
+        if (search->second.getParent() == nullptr){
+            return NO_REGION;
+        }
+        return (search->second.getParent())->getId();
+    }
+    // throw NotImplemented("get_parent()");
+}
+
+std::vector<RegionID> Datastructures::station_in_regions(StationID id)
+{
+    // Replace the line below with your implementation
+    auto search = map_of_station_region_id.find(stationid);
+    if (search == map_of_station_region_id.end()) {
+        // not found
+        return {{NO_REGION}};
+    } else {
+        // found
+        // region should always be found
+        // auto region_search = map_of_regionID.find(search->second.getId());
+
+        // found
+        std::vector<RegionID> vectorOfId;
+        vectorOfId.reserve(map_of_regionID.size()); // try removing this line if there is problem
+        vectorOfId.push_back(search->second.getId());
+        RegionID parentId = get_parent(search->second.getId());
+        while (parentId != NO_REGION) {
+            vectorOfId.push_back(parentId);
+            parentId = get_parent(parentId);
+        }
+        return vectorOfId;
+
+    }
+    // throw NotImplemented("station_in_regions()");
 }
 
 std::vector<RegionID> Datastructures::all_subregions_of_region(RegionID /*id*/)
