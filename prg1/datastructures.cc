@@ -275,7 +275,7 @@ bool Datastructures::add_region(RegionID id, const Name & name, std::vector<Coor
         // not found
         Region newRegion(id, name, coords);
         map_of_regionID.insert({id, newRegion}); // i dont need to use new;
-        // for (AffiliationID affilation_id : affiliations) {
+        // for (StationID affilation_id : affiliations) {
         //     multimap_of_affilation_publication_id.insert({affilation_id, {id, year}});
         // }         
         return true;
@@ -404,26 +404,126 @@ std::vector<RegionID> Datastructures::station_in_regions(StationID id)
     // throw NotImplemented("station_in_regions()");
 }
 
-std::vector<RegionID> Datastructures::all_subregions_of_region(RegionID /*id*/)
-{
-    // Replace the line below with your implementation
-    throw NotImplemented("all_subregions_of_region()");
+// Optional
+void Datastructures::get_all_references_helper(Region node, std::vector<RegionID>& referenceListToUpdate)
+{   
+    std::vector<Region*> children;
+//    if (referenceListToUpdate.empty() == false){
+//        referenceListToUpdate.push_back(node.getId()); // only push the parent node if node is not first searched node
+//    }
+    children = node.getReferences();
+    if (node.getReferences().empty()) {
+        return;
+    }
+    for (auto it = children.begin(); it != children.end(); ++it){
+        referenceListToUpdate.push_back((*it)->getId());
+        get_all_references_helper(*(*(it)), referenceListToUpdate); // ugly dereferencing
+    }   
+    // throw NotImplemented("get_all_references()");
 }
 
-std::vector<StationID> Datastructures::stations_closest_to(Coord /*xy*/)
+std::vector<RegionID> Datastructures::all_subregions_of_region(RegionID id)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("stations_closest_to()");
+    auto search = map_of_regionID.find(id);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return {NO_REGION};
+    } else {
+        // found
+        std::vector<RegionID> vectorOfId;
+        vectorOfId.reserve(map_of_regionID.size()); // try removing this line if there is problem
+        get_all_references_helper(search->second, vectorOfId);
+        return vectorOfId;       
+    }
+    // throw NotImplemented("all_subregions_of_region()");
 }
 
-bool Datastructures::remove_station(StationID /*id*/)
+std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("remove_station()");
+    if(map_of_stationID.size() == 0){
+        return {};
+    }
+    auto comp = [&xy](const std::pair<Coord, StationID>& a, const std::pair<Coord, StationID>& b) {
+        double distanceA = std::abs(a.first.x - xy.x) + std::abs(a.first.y - xy.y);
+        double distanceB = std::abs(b.first.x - xy.x) + std::abs(b.first.y - xy.y);
+
+        if (distanceA == distanceB) {
+           return a.first.y < b.first.y;
+       }
+
+        return distanceA < distanceB;
+    };
+
+    std::vector<StationID> resultVector;
+    resultVector.reserve(3);
+
+    if(vector_of_station_coord.size() == map_of_station_coord.size()){
+        std::partial_sort(vector_of_station_coord.begin(), vector_of_station_coord.begin() + 3, vector_of_station_coord.end(), comp);
+        if(vector_of_station_coord.size() > 2){
+            for(int i = 0; i < 3; i++) { resultVector.push_back(vector_of_station_coord[i].second);}
+            return resultVector;
+        }
+        std::transform(vector_of_station_coord.begin(), vector_of_station_coord.end(), std::back_inserter(resultVector),[](const std::pair<Coord, StationID>& p) {
+            return p.second;
+        });
+        return resultVector;
+    } else {
+        std::vector<std::pair<Coord, StationID>> vectorOfId;
+        vectorOfId.reserve(map_of_station_coord.size());
+        std::transform(map_of_station_coord.begin(), map_of_station_coord.end(), std::back_inserter(vectorOfId),
+                    [](const std::pair<Coord, StationID>& pair) {
+                        return pair;
+                    });
+        std::partial_sort(vectorOfId.begin(), vectorOfId.begin() + 3, vectorOfId.end(), comp);
+        vector_of_station_coord = vectorOfId;
+        if(vectorOfId.size() > 2){
+            for(int i = 0; i < 3; i++) { resultVector.push_back(vectorOfId[i].second);}
+            return resultVector;
+        }
+        std::transform(vectorOfId.begin(), vectorOfId.end(), std::back_inserter(resultVector),[](const std::pair<Coord, StationID>& p) {
+            return p.second;
+        });
+        return resultVector;
+    }
+    //throw NotImplemented("stations_closest_to()");
+}
+
+bool Datastructures::remove_station(StationID id)
+{
+    // Replace the line below with your implementation remove_affiliation
+    // std::vector<PublicationID> vectorOfId = get_publications(id);
+    Name stationName = get_station_name(id);
+    if(stationName == NO_NAME){
+        return false;
+    }
+    // get direct region the station belongs to
+    auto region_search = map_of_station_region_id.find(stationid);
+    
+    set_of_station_names.erase({get_affiliation_name(id), id});
+    map_of_station_coord.erase(get_affiliation_coord(id));
+
+    multimap_of_station_train_id.erase(id);
+    map_of_station_region_id.erase(id);
+    map_of_stationID.erase(id);
+
+    is_latest_station_sortedValid = false;
+    is_latest_station_sortedAlphabeticallyValid = false;
+    if(region_search == map_of_station_region_id.end()){
+        // not found
+        return true;
+    } 
+
+    Region foundRegion = map_of_regionID.find(region_search->second.getId())->second;
+    foundRegion.remove_station(id);
+
+    return true;
+    //throw NotImplemented("remove_station()");
 }
 
 RegionID Datastructures::common_ancestor_of_regions(RegionID /*id1*/, RegionID /*id2*/)
 {
-    // Replace the line below with your implementation
+    // Replace the line below with your implementation get_closest_common_parent
     throw NotImplemented("common_ancestor_of_regions()");
 }
