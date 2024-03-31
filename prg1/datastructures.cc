@@ -500,7 +500,7 @@ bool Datastructures::remove_station(StationID id)
     }
     // get direct region the station belongs to
     auto region_search = map_of_station_region_id.find(stationid);
-    
+
     set_of_station_names.erase({get_affiliation_name(id), id});
     map_of_station_coord.erase(get_affiliation_coord(id));
 
@@ -522,8 +522,56 @@ bool Datastructures::remove_station(StationID id)
     //throw NotImplemented("remove_station()");
 }
 
-RegionID Datastructures::common_ancestor_of_regions(RegionID /*id1*/, RegionID /*id2*/)
+std::vector<RegionID> Datastructures::getAllParentsOfRegions(RegionID id)
+{
+    auto search = map_of_regionID.find(id);
+    if (search == map_of_regionID.end()) {
+        // not found
+        return {{NO_REGION}};
+    } else {
+        // found
+        // region should always be found
+        // auto region_search = map_of_regionID.find(search->second.getId());
+
+        // found
+        std::vector<RegionID> vectorOfId;
+        vectorOfId.reserve(map_of_regionID.size()); // try removing this line if there is problem
+        vectorOfId.push_back(search->second.getId());
+        RegionID parentId = get_parent(search->second.getId());
+        while (parentId != NO_REGION) {
+            vectorOfId.push_back(parentId);
+            parentId = get_parent(parentId);
+        }
+        return vectorOfId;
+
+    }
+}
+
+RegionID Datastructures::common_ancestor_of_regions(RegionID id1, RegionID id2)
 {
     // Replace the line below with your implementation get_closest_common_parent
-    throw NotImplemented("common_ancestor_of_regions()");
+    std::vector<PublicationID> list_of_reference_1 = getAllParentsOfRegions(id1);
+    std::vector<PublicationID> list_of_reference_2 = getAllParentsOfRegions(id2);
+
+    if(list_of_reference_1[0] == NO_REGION || list_of_reference_2[0] == NO_REGION) {
+        return NO_REGION;
+    }
+
+    std::vector<int> v_intersection;
+    if(list_of_reference_1.size() < list_of_reference_2.size()){
+        for(auto &id : list_of_reference_1) {
+            if(std::find(list_of_reference_2.begin(), list_of_reference_2.end(), id) != list_of_reference_2.end()) {
+                return id;
+            }
+        }
+    } else {
+        for(auto &id : list_of_reference_2) {
+            if(std::find(list_of_reference_1.begin(), list_of_reference_1.end(), id) != list_of_reference_1.end()) {
+                return id;
+            }
+        }
+    }
+
+    return NO_REGION;
+    // throw NotImplemented("common_ancestor_of_regions()");
 }
