@@ -493,7 +493,7 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
 bool Datastructures::remove_station(StationID id)
 {
     // Replace the line below with your implementation remove_affiliation
-    // std::vector<PublicationID> vectorOfId = get_publications(id);
+    // std::vector<RegionID> vectorOfId = get_publications(id);
     Name stationName = get_station_name(id);
     if(stationName == NO_NAME){
         return false;
@@ -550,8 +550,8 @@ std::vector<RegionID> Datastructures::getAllParentsOfRegions(RegionID id)
 RegionID Datastructures::common_ancestor_of_regions(RegionID id1, RegionID id2)
 {
     // Replace the line below with your implementation get_closest_common_parent
-    std::vector<PublicationID> list_of_reference_1 = getAllParentsOfRegions(id1);
-    std::vector<PublicationID> list_of_reference_2 = getAllParentsOfRegions(id2);
+    std::vector<RegionID> list_of_reference_1 = getAllParentsOfRegions(id1);
+    std::vector<RegionID> list_of_reference_2 = getAllParentsOfRegions(id2);
 
     if(list_of_reference_1[0] == NO_REGION || list_of_reference_2[0] == NO_REGION) {
         return NO_REGION;
