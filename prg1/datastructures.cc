@@ -499,10 +499,10 @@ bool Datastructures::remove_station(StationID id)
         return false;
     }
     // get direct region the station belongs to
-    auto region_search = map_of_station_region_id.find(stationid);
+    auto region_search = map_of_station_region_id.find(id);
 
-    set_of_station_names.erase({get_affiliation_name(id), id});
-    map_of_station_coord.erase(get_affiliation_coord(id));
+    set_of_station_names.erase({get_station_name(id), id});
+    map_of_station_coord.erase(get_station_coordinates(id));
 
     multimap_of_station_train_id.erase(id);
     map_of_station_region_id.erase(id);
