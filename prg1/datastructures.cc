@@ -393,8 +393,8 @@ bool Datastructures::add_station_to_region(StationID id, RegionID parentid)
     } else {
         // found
         // check if station belongs to a region, if it does return false
-        auto search = map_of_station_region_id.find(id);
-        if (search == map_of_station_region_id.end()) {
+        auto search_station_in_region = map_of_station_region_id.find(id);
+        if (search_station_in_region == map_of_station_region_id.end()) {
             // not found
             search->second.add_station(id);
             map_of_station_region_id.insert({id, parentid});
