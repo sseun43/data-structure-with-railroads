@@ -262,8 +262,8 @@ bool Datastructures::remove_departure(StationID stationid, TrainID trainid, Time
                 return true;
             }
         }
-        multimap_of_station_train_id.insert({stationid, {time, trainid}});        
-        return true;
+        // multimap_of_station_train_id.insert({stationid, {time, trainid}});        
+        return false;
         
     }
     // throw NotImplemented("remove_departure()");
