@@ -231,7 +231,7 @@ public:
 private:
     // Add stuff needed for your class implementation here
     std::multiset<std::pair<Name, StationID>> set_of_station_names;
-    std::multimap<Coord, StationID, CompareCoordinates> map_of_station_coord;
+    std::multimap<Coord, StationID, CompareCoordinates> multimap_of_station_coord;
     std::unordered_map<StationID, Station_struct> map_of_stationID;
     std::vector<StationID> sorted_Id_Alphabetically;
     std::vector<StationID> sorted_Id_Distance;
