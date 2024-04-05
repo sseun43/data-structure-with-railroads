@@ -272,10 +272,14 @@ bool Datastructures::remove_departure(StationID stationid, TrainID trainid, Time
 std::vector<std::pair<Time, TrainID>> Datastructures::station_departures_after(StationID stationid, Time time)
 {
     // Replace the line below with your implementation
+    Name stationName = get_station_name(stationid);
+    if(stationName == NO_NAME){
+        return {{NO_TIME, NO_TRAIN}};
+    }
     auto search = multimap_of_station_train_id.find(stationid);
     if (search == multimap_of_station_train_id.end()) {
         // not found
-        return {{NO_TIME, NO_TRAIN}};
+        return {};
     } else {
         // found
         // use equal range
