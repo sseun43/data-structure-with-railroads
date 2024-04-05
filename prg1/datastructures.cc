@@ -278,7 +278,7 @@ std::vector<std::pair<Time, TrainID>> Datastructures::station_departures_after(S
     }
     auto search = multimap_of_station_train_id.find(stationid);
     if (search == multimap_of_station_train_id.end()) {
-        // not found
+        // not found s
         return {};
     } else {
         // found
