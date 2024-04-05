@@ -222,7 +222,7 @@ bool Datastructures::add_departure(StationID stationid, TrainID trainid, Time ti
         // need to check if trainId is present and time is 
         auto range = multimap_of_station_train_id.equal_range(stationid);
         for (auto it = range.first; it != range.second; ++it){
-            if(it->second == {time, trainid}){
+            if(it->second.first == time && it->second.second == trainid){
                 return false;
             }
         }
@@ -244,7 +244,7 @@ bool Datastructures::remove_departure(StationID stationid, TrainID trainid, Time
         // need to check if trainId is present and time is 
         auto range = multimap_of_station_train_id.equal_range(stationid);
         for (auto it = range.first; it != range.second; ++it){
-            if(it->second == {time, trainid}){
+            if(it->second.first == time && it->second.second == trainid){
                 //erase
                 multimap_of_station_train_id.erase(it);
                 return true;
@@ -369,7 +369,7 @@ bool Datastructures::add_station_to_region(StationID id, RegionID parentid)
     } else {
         // found
         search->second.add_station(id);
-        map_of_station_region_id.insert({parentid, id});
+        map_of_station_region_id.insert({id, parentid});
         return true;
     }   
     throw NotImplemented("add_station_to_region()");
@@ -395,7 +395,7 @@ RegionID Datastructures::get_parent(RegionID id)
 std::vector<RegionID> Datastructures::station_in_regions(StationID id)
 {
     // Replace the line below with your implementation
-    auto search = map_of_station_region_id.find(stationid);
+    auto search = map_of_station_region_id.find(id);
     if (search == map_of_station_region_id.end()) {
         // not found
         return {{NO_REGION}};
@@ -530,7 +530,7 @@ bool Datastructures::remove_station(StationID id)
         return true;
     } 
 
-    Region foundRegion = map_of_regionID.find(region_search->second.getId())->second;
+    Region foundRegion = map_of_regionID.find(region_search->second)->second;
     foundRegion.remove_station(id);
 
     return true;
