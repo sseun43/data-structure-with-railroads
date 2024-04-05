@@ -244,7 +244,7 @@ private:
     std::unordered_multimap<StationID, std::pair<Time, TrainID>> multimap_of_station_train_id;
     void get_all_references_helper(Region node, std::vector<RegionID>& referenceListToUpdate);
     RegionID get_parent(RegionID id);
-    std::vector<RegionID> getAllParentsOfRegions(RegionID id)
+    std::vector<RegionID> getAllParentsOfRegions(RegionID id);
 };
 
 #endif // DATASTRUCTURES_HH

@@ -334,7 +334,7 @@ std::vector<Coord> Datastructures::get_region_coords(RegionID id)
     auto search = map_of_regionID.find(id);
     if (search == map_of_regionID.end()) {
         // not found
-        return NO_COORD;
+        return {NO_COORD};
     } else {
         // found
         return search->second.getCoords();
@@ -407,8 +407,8 @@ std::vector<RegionID> Datastructures::station_in_regions(StationID id)
         // found
         std::vector<RegionID> vectorOfId;
         vectorOfId.reserve(map_of_regionID.size()); // try removing this line if there is problem
-        vectorOfId.push_back(search->second.getId());
-        RegionID parentId = get_parent(search->second.getId());
+        vectorOfId.push_back(search->second);
+        RegionID parentId = get_parent(search->second);
         while (parentId != NO_REGION) {
             vectorOfId.push_back(parentId);
             parentId = get_parent(parentId);
