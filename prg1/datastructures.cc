@@ -382,15 +382,25 @@ bool Datastructures::add_subregion_to_region(RegionID id, RegionID parentid)
 bool Datastructures::add_station_to_region(StationID id, RegionID parentid)
 {
     // Replace the line below with your implementation
+    Name stationName = get_station_name(id);
+    if(stationName == NO_NAME){
+        return false;
+    }
     auto search = map_of_regionID.find(parentid);
     if (search == map_of_regionID.end()) {
         // not found
         return false;
     } else {
         // found
-        search->second.add_station(id);
-        map_of_station_region_id.insert({id, parentid});
-        return true;
+        // check if station belongs to a region, if it does return false
+        auto search = map_of_station_region_id.find(id);
+        if (search == map_of_station_region_id.end()) {
+            // not found
+            search->second.add_station(id);
+            map_of_station_region_id.insert({id, parentid});
+            return true;
+        }
+        return false;
     }   
     throw NotImplemented("add_station_to_region()");
 }
