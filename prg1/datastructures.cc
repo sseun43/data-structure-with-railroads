@@ -558,7 +558,7 @@ std::vector<RegionID> Datastructures::getAllParentsOfRegions(RegionID id)
     auto search = map_of_regionID.find(id);
     if (search == map_of_regionID.end()) {
         // not found
-        return {{NO_REGION}};
+        return {NO_REGION};
     } else {
         // found
         // region should always be found
@@ -567,7 +567,7 @@ std::vector<RegionID> Datastructures::getAllParentsOfRegions(RegionID id)
         // found
         std::vector<RegionID> vectorOfId;
         vectorOfId.reserve(map_of_regionID.size()); // try removing this line if there is problem
-        vectorOfId.push_back(search->second.getId());
+        // vectorOfId.push_back(search->second.getId());
         RegionID parentId = get_parent(search->second.getId());
         while (parentId != NO_REGION) {
             vectorOfId.push_back(parentId);
