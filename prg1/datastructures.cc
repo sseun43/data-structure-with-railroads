@@ -52,7 +52,7 @@ void Datastructures::clear_all()
     map_of_stationID.clear();
     map_of_regionID.clear();
     set_of_station_names.clear();
-    map_of_station_coord.clear();
+    multimap_of_station_coord.clear();
 
     sorted_Id_Alphabetically.clear();
     sorted_Id_Distance.clear();
@@ -86,7 +86,7 @@ bool Datastructures::add_station(StationID id, const Name& name, Coord xy)
         map_of_stationID.insert({id, temp_aff});
 
         set_of_station_names.insert({name, id});
-        map_of_station_coord.insert({xy,id});
+        multimap_of_station_coord.insert({xy,id});
         is_latest_station_sortedValid = false;
         is_latest_station_sortedAlphabeticallyValid = false;
         return true;
@@ -150,7 +150,7 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
     if (is_latest_station_sortedValid == false){
         std::vector<StationID> vectorOfId;
         vectorOfId.reserve(latest_station_count);
-        std::transform(map_of_station_coord.begin(), map_of_station_coord.end(), std::back_inserter(vectorOfId),
+        std::transform(multimap_of_station_coord.begin(), multimap_of_station_coord.end(), std::back_inserter(vectorOfId),
         [](const std::pair<Coord, StationID>& p) { return p.second; });
 
         sorted_Id_Distance = vectorOfId;
@@ -164,13 +164,21 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
 std::vector<StationID> Datastructures::find_stations_with_coord(Coord xy)
 {
     // Replace the line below with your implementation
-    auto search = map_of_station_coord.find(xy);
-    if (search == map_of_station_coord.end()) {
+    auto search = multimap_of_station_coord.find(xy);
+    if (search == multimap_of_station_coord.end()) {
         // not found
-        return NO_STATION;
+        return {NO_STATION};
     } else {
         // found
-        return search->second;
+        // use equal range
+        auto range = multimap_of_station_coord.equal_range(xy);
+        std::vector<StationID> vectorOfId;
+        vectorOfId.reserve((std::distance(range.first, range.second)));
+
+        for (auto it = range.first; it != range.second; ++it){
+            vectorOfId.push_back(it->second);
+        }
+        return vectorOfId;
     }
     //throw NotImplemented("find_stations_with_coord()");
 }
@@ -184,15 +192,22 @@ bool Datastructures::change_station_coord(StationID id, Coord newcoord)
         return false;
     } else {
         // found
+        // use equal range
         Station_struct old_aff = search->second;
-        map_of_station_coord.erase(old_aff.location); // removable to improve time efficiency
-        map_of_station_coord[newcoord] = id;
+        auto range = multimap_of_station_coord.equal_range(old_aff.location);
+        for (auto it = range.first; it != range.second; ++it){
+            if(it->second == id){
+                multimap_of_station_coord.erase(it);
+                multimap_of_station_coord.insert({newcoord, id});
 
-        old_aff.location = newcoord;
-        map_of_stationID[id] = old_aff;
-        is_latest_station_sortedValid = false;
-        return true;
-    }    
+                old_aff.location = newcoord;
+                map_of_stationID[id] = old_aff;
+                is_latest_station_sortedValid = false;
+                return true;
+            }
+        }
+    }
+    return false;    
     //throw NotImplemented("change_station_coord()");
 }
 
@@ -459,7 +474,7 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
     std::vector<StationID> resultVector;
     resultVector.reserve(3);
 
-    if(vector_of_station_coord.size() == map_of_station_coord.size()){
+    if(vector_of_station_coord.size() == multimap_of_station_coord.size()){
         std::partial_sort(vector_of_station_coord.begin(), vector_of_station_coord.begin() + 3, vector_of_station_coord.end(), comp);
         if(vector_of_station_coord.size() > 2){
             for(int i = 0; i < 3; i++) { resultVector.push_back(vector_of_station_coord[i].second);}
@@ -471,8 +486,8 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
         return resultVector;
     } else {
         std::vector<std::pair<Coord, StationID>> vectorOfId;
-        vectorOfId.reserve(map_of_station_coord.size());
-        std::transform(map_of_station_coord.begin(), map_of_station_coord.end(), std::back_inserter(vectorOfId),
+        vectorOfId.reserve(multimap_of_station_coord.size());
+        std::transform(multimap_of_station_coord.begin(), multimap_of_station_coord.end(), std::back_inserter(vectorOfId),
                     [](const std::pair<Coord, StationID>& pair) {
                         return pair;
                     });
@@ -502,7 +517,7 @@ bool Datastructures::remove_station(StationID id)
     auto region_search = map_of_station_region_id.find(id);
 
     set_of_station_names.erase({get_station_name(id), id});
-    map_of_station_coord.erase(get_station_coordinates(id));
+    multimap_of_station_coord.erase(get_station_coordinates(id));
 
     multimap_of_station_train_id.erase(id);
     map_of_station_region_id.erase(id);
