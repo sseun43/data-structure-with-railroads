@@ -179,7 +179,7 @@ std::vector<StationID> Datastructures::find_stations_with_coord(Coord xy)
     auto search = multimap_of_station_coord.find(xy);
     if (search == multimap_of_station_coord.end()) {
         // not found
-        return {NO_STATION};
+        return {};
     } else {
         // found
         // use equal range
