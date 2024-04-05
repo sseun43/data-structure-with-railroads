@@ -368,9 +368,13 @@ bool Datastructures::add_subregion_to_region(RegionID id, RegionID parentid)
         return false;
     } else {
         // found
-        search_parent->second.addReference(&(search_child->second));
-        search_child->second.addParent(&(search_parent->second));
-        return true;
+        // check if id is a subregion
+        if (search_child->second.getParent() == nullptr){
+            search_parent->second.addReference(&(search_child->second));
+            search_child->second.addParent(&(search_parent->second));
+            return true;
+        }
+        return false;
     }
     // throw NotImplemented("add_subregion_to_region()");
 }
