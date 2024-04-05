@@ -551,7 +551,13 @@ bool Datastructures::remove_station(StationID id)
     auto region_search = map_of_station_region_id.find(id);
 
     set_of_station_names.erase({get_station_name(id), id});
-    multimap_of_station_coord.erase(get_station_coordinates(id));
+    // should only remove one station not everything
+    auto range = multimap_of_station_coord.equal_range(get_station_coordinates(id));
+    for (auto it = range.first; it != range.second; ++it){
+        if(it->second == id){
+            multimap_of_station_coord.erase(it);
+        }
+    }
 
     multimap_of_station_train_id.erase(id);
     map_of_station_region_id.erase(id);
