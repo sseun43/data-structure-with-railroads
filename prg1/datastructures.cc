@@ -368,7 +368,7 @@ bool Datastructures::add_subregion_to_region(RegionID id, RegionID parentid)
         return false;
     } else {
         // found
-        // check if id is a subregion
+        // check if id is a subregion of another, if not add new parent
         if (search_child->second.getParent() == nullptr){
             search_parent->second.addReference(&(search_child->second));
             search_child->second.addParent(&(search_parent->second));
