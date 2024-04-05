@@ -409,12 +409,12 @@ std::vector<RegionID> Datastructures::station_in_regions(StationID id)
     // Replace the line below with your implementation
     Name stationName = get_station_name(id);
     if(stationName == NO_NAME){
-        return {{NO_REGION}};
+        return {NO_REGION};
     }
     auto search = map_of_station_region_id.find(id);
     if (search == map_of_station_region_id.end()) {
         // not found
-        return {{}};
+        return {};
     } else {
         // found
         // region should always be found
