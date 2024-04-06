@@ -549,7 +549,7 @@ bool Datastructures::remove_station(StationID id)
     auto range = multimap_of_station_coord.equal_range(stationLocation);
     for (auto it = range.first; it != range.second; ++it){
         if(it->second == id){
-            it = multimap_of_station_coord.erase(it);
+            multimap_of_station_coord.erase(it);
         }
     }
 
@@ -568,7 +568,7 @@ bool Datastructures::remove_station(StationID id)
     RegionID stationRegionID = region_search->second;
     Region foundRegion = map_of_regionID.find(stationRegionID)->second;
     foundRegion.remove_station(id);
-    
+
     map_of_station_region_id.erase(id);
     return true;
     //throw NotImplemented("remove_station()");
