@@ -555,7 +555,7 @@ bool Datastructures::remove_station(StationID id)
     auto range = multimap_of_station_coord.equal_range(get_station_coordinates(id));
     for (auto it = range.first; it != range.second; ++it){
         if(it->second == id){
-            multimap_of_station_coord.erase(it);
+            it = multimap_of_station_coord.erase(it);
         }
     }
 
