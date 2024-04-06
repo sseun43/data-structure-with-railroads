@@ -488,9 +488,7 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
         return {};
     }
     auto comp = [&xy](const std::pair<Coord, StationID>& a, const std::pair<Coord, StationID>& b) {
-        if (a.first == b.first) {
-            return a.second < b.second;
-        }
+
         double distanceA = std::abs(a.first.x - xy.x) + std::abs(a.first.y - xy.y);
         double distanceB = std::abs(b.first.x - xy.x) + std::abs(b.first.y - xy.y);
 
