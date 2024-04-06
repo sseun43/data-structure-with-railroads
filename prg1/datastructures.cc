@@ -566,7 +566,8 @@ bool Datastructures::remove_station(StationID id)
         return true;
     } 
 
-    Region foundRegion = map_of_regionID.find(region_search->second)->second;
+    RegionID stationRegionID = region_search->second;
+    Region foundRegion = map_of_regionID.find(stationRegionID)->second;
     foundRegion.remove_station(id);
 
     return true;
