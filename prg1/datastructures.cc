@@ -519,7 +519,7 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
                         return pair;
                     });
         std::partial_sort(vectorOfId.begin(), vectorOfId.begin() + 3, vectorOfId.end(), comp);
-        // vector_of_station_coord = vectorOfId;
+        vector_of_station_coord = vectorOfId;
         if(vectorOfId.size() > 2){
             for(int i = 0; i < 3; i++) { resultVector.push_back(vectorOfId[i].second);}
             return resultVector;
