@@ -151,25 +151,13 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
     // Replace the line below with your implementation
     unsigned int latest_station_count = map_of_stationID.size();
     if (is_latest_station_sortedValid == false){
-        std::vector<std::pair<Coord, StationID>> vectorOfPair;
-        vectorOfPair.reserve(latest_station_count);
-        std::transform(set_of_station_coord.begin(), set_of_station_coord.end(), std::back_inserter(vectorOfPair),
-        [](const std::pair<Coord, StationID>& p) { return p; });
-
-        std::sort(vectorOfPair.begin(), vectorOfPair.end(), [](const std::pair<Coord, StationID>& lhs, const std::pair<Coord, StationID>& rhs) {
-            if (lhs.first == rhs.first) { // If Coords are equal
-                return lhs.second < rhs.second; // Compare StationIDs
-            }
-            return false; // Leave the order as it is
-        });
-
         std::vector<StationID> vectorOfId;
         vectorOfId.reserve(latest_station_count);
-        std::transform(vectorOfPair.begin(), vectorOfPair.end(), std::back_inserter(vectorOfId),
+        std::transform(set_of_station_coord.begin(), set_of_station_coord.end(), std::back_inserter(vectorOfId),
         [](const std::pair<Coord, StationID>& p) { return p.second; });
 
         sorted_Id_Distance = vectorOfId;
-        is_latest_station_sortedValid = true;
+        is_latest_affilation_sortedValid = true;
     }
 
     return sorted_Id_Distance;
