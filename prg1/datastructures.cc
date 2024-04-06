@@ -157,7 +157,7 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
         [](const std::pair<Coord, StationID>& p) { return p.second; });
 
         sorted_Id_Distance = vectorOfId;
-        is_latest_affilation_sortedValid = true;
+        is_latest_station_sortedValid = true;
     }
 
     return sorted_Id_Distance;
