@@ -116,6 +116,22 @@ struct CompareCoordinates {
    }
 };
 
+struct CompareCoordinatesForSet {
+   bool operator()(std::pair<Coord, StationID> c1, std::pair<Coord, StationID> c2) const {
+      if (c1.first == c2.first) {
+          return c1.second < c2.second;
+      }
+       double distanceA = std::abs(c1.first.x) + std::abs(c1.first.y);
+       double distanceB = std::abs(c2.first.x) + std::abs(c2.first.y);
+
+       if (distanceA == distanceB) {
+           return c1.first.y < c2.first.y;
+       }
+
+       return distanceA < distanceB;
+   }
+};
+
 // Add your own STL includes above this comment
 
 // This is the class you are supposed to implement
@@ -232,6 +248,9 @@ private:
     // Add stuff needed for your class implementation here
     std::multiset<std::pair<Name, StationID>> set_of_station_names;
     std::multimap<Coord, StationID, CompareCoordinates> multimap_of_station_coord;
+
+    std::set<std::pair<Coord, StationID>, CompareCoordinatesForSet> set_of_station_coord;
+
     std::unordered_map<StationID, Station_struct> map_of_stationID;
     std::vector<StationID> sorted_Id_Alphabetically;
     std::vector<StationID> sorted_Id_Distance;

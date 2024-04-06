@@ -53,6 +53,7 @@ void Datastructures::clear_all()
     map_of_regionID.clear();
     set_of_station_names.clear();
     multimap_of_station_coord.clear();
+    set_of_station_coord.clear();
 
     sorted_Id_Alphabetically.clear();
     sorted_Id_Distance.clear();
@@ -87,6 +88,8 @@ bool Datastructures::add_station(StationID id, const Name& name, Coord xy)
 
         set_of_station_names.insert({name, id});
         multimap_of_station_coord.insert({xy,id});
+        set_of_station_coord.insert({xy,id});
+
         is_latest_station_sortedValid = false;
         is_latest_station_sortedAlphabeticallyValid = false;
         return true;
@@ -150,7 +153,7 @@ std::vector<StationID> Datastructures::stations_distance_increasing()
     if (is_latest_station_sortedValid == false){
         std::vector<std::pair<Coord, StationID>> vectorOfPair;
         vectorOfPair.reserve(latest_station_count);
-        std::transform(multimap_of_station_coord.begin(), multimap_of_station_coord.end(), std::back_inserter(vectorOfPair),
+        std::transform(set_of_station_coord.begin(), set_of_station_coord.end(), std::back_inserter(vectorOfPair),
         [](const std::pair<Coord, StationID>& p) { return p; });
 
         std::sort(vectorOfPair.begin(), vectorOfPair.end(), [](const std::pair<Coord, StationID>& lhs, const std::pair<Coord, StationID>& rhs) {
@@ -210,7 +213,9 @@ bool Datastructures::change_station_coord(StationID id, Coord newcoord)
         for (auto it = range.first; it != range.second; ++it){
             if(it->second == id){
                 multimap_of_station_coord.erase(it);
+                set_of_station_coord.erase({old_aff.location, id});
                 multimap_of_station_coord.insert({newcoord, id});
+                set_of_station_coord.insert({newcoord, id});
 
                 old_aff.location = newcoord;
                 map_of_stationID[id] = old_aff;
@@ -551,13 +556,16 @@ bool Datastructures::remove_station(StationID id)
     auto region_search = map_of_station_region_id.find(id);
 
     set_of_station_names.erase({get_station_name(id), id});
+    Coord stationLocation = get_station_coordinates(id);
     // should only remove one station not everything
-    auto range = multimap_of_station_coord.equal_range(get_station_coordinates(id));
+    auto range = multimap_of_station_coord.equal_range(stationLocation);
     for (auto it = range.first; it != range.second; ++it){
         if(it->second == id){
             it = multimap_of_station_coord.erase(it);
         }
     }
+
+    set_of_station_coord.erase({stationLocation, id});
 
     multimap_of_station_train_id.erase(id);
     map_of_station_region_id.erase(id);
