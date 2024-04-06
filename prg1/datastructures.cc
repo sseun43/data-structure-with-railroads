@@ -556,7 +556,6 @@ bool Datastructures::remove_station(StationID id)
     set_of_station_coord.erase({stationLocation, id});
 
     multimap_of_station_train_id.erase(id);
-    map_of_station_region_id.erase(id);
     map_of_stationID.erase(id);
 
     is_latest_station_sortedValid = false;
@@ -569,7 +568,8 @@ bool Datastructures::remove_station(StationID id)
     RegionID stationRegionID = region_search->second;
     Region foundRegion = map_of_regionID.find(stationRegionID)->second;
     foundRegion.remove_station(id);
-
+    
+    map_of_station_region_id.erase(id);
     return true;
     //throw NotImplemented("remove_station()");
 }
