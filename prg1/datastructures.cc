@@ -543,15 +543,18 @@ bool Datastructures::remove_station(StationID id)
     // get direct region the station belongs to
     auto region_search = map_of_station_region_id.find(id);
 
-    set_of_station_names.erase({get_station_name(id), id});
+    set_of_station_names.erase({stationName, id});
     Coord stationLocation = get_station_coordinates(id);
     // should only remove one station not everything
-    auto range = multimap_of_station_coord.equal_range(stationLocation);
-    for (auto it = range.first; it != range.second; ++it){
-        if(it->second == id){
-            multimap_of_station_coord.erase(it);
+    if(region_search != map_of_station_region_id.end()){
+        // not found
+        auto range = multimap_of_station_coord.equal_range(stationLocation);
+        for (auto it = range.first; it != range.second; ++it){
+            if(it->second == id){
+                multimap_of_station_coord.erase(it);
+            }
         }
-    }
+    } 
 
     set_of_station_coord.erase({stationLocation, id});
 
