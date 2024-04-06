@@ -176,7 +176,7 @@ public:
     // Short rationale for estimate: converting map to vector
     std::vector<StationID> stations_distance_increasing();
 
-    // Estimate of performance: O(log(n))
+    // Estimate of performance: O(n)
     // Short rationale for estimate: Find is logarithmic for map
     std::vector<StationID> find_stations_with_coord(Coord xy);
 
