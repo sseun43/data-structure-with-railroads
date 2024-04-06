@@ -519,6 +519,7 @@ std::vector<StationID> Datastructures::stations_closest_to(Coord xy)
                     [](const std::pair<Coord, StationID>& pair) {
                         return pair;
                     });
+        std::partial_sort(vectorOfId.begin(), vectorOfId.begin() + 3, vectorOfId.end(), comp);
         vector_of_station_coord.clear();
         std::copy(vectorOfId.begin(), vectorOfId.end(), std::back_inserter(vector_of_station_coord));
         // vector_of_station_coord = vectorOfId;
