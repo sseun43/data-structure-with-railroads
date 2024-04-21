@@ -706,14 +706,15 @@ std::vector<StationID> Datastructures::train_stations_from(StationID stationid, 
         if (it == stationtimes.end()) {
             return {NO_STATION};
         } else {
-        std::vector<std::pair<StationID, double>> directConnections(it, stationtimes.end());
-        std::vector<StationID> vectorOfId;
-        vectorOfId.reserve(map_of_stationID.size());
-        std::transform(directConnections.begin(), directConnections.end(), std::back_inserter(vectorOfId),
-                [](const std::pair<StationID, double>& pair) {
-                    return pair.first;
-                });
-        return vectorOfId;
+            auto it1 = std::next(it, 1);
+            std::vector<std::pair<StationID, double>> directConnections(it1, stationtimes.end());
+            std::vector<StationID> vectorOfId;
+            vectorOfId.reserve(map_of_stationID.size());
+            std::transform(directConnections.begin(), directConnections.end(), std::back_inserter(vectorOfId),
+                    [](const std::pair<StationID, double>& pair) {
+                        return pair.first;
+                    });
+            return vectorOfId;
         }
     }
     // map_of_train_vectorOfStations.find(trainid);
