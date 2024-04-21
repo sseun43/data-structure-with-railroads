@@ -6,11 +6,155 @@
 #include <vector>
 #include <utility>
 
+#include "customtypes.hh"
+
 // Add your own STL includes below this comment
+// my code
+#include <string>
+#include <tuple>
+#include <limits>
+#include <functional>
+#include <exception>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <cmath>
+
+struct Station_struct { 
+  StationID stationid;
+  Name name;
+  Coord location;
+};
+
+class Region {
+public:
+  Region(RegionID id_in, Name title_in, std::vector<Coord> regionShapeCoords_in, std::vector<StationID> stations_in = {}) {
+    std::unordered_set<StationID> myset(stations_in.begin(), stations_in.end());
+    id = id_in;
+    regionShapeCoords = regionShapeCoords_in;
+    title = title_in;
+    region_stations = myset;
+  }
+
+  RegionID getId() {
+    return id;
+  }
+
+  Name getTitle() {
+    return title;
+  }
+
+  std::vector<Coord> getCoords() {
+    return regionShapeCoords;
+  }
+
+  void addReference(Region* reference) {
+    references.push_back(reference);
+  }
+
+  void add_station(StationID station_id) {
+    region_stations.insert(station_id);
+  }
+
+  void remove_station(StationID station_id) {
+    region_stations.erase(station_id);
+  }
+
+  void addParent(Region* parentToAdd){
+      parent = parentToAdd;
+  }
+
+  std::vector<Region*> getReferences() {
+    return references;
+  }
+
+  std::vector<StationID> getRegStations() {
+      std::vector<StationID> vec(region_stations.begin(), region_stations.end());
+      return vec;
+  }
+
+  Region* getParent(){
+      return parent;
+  }
+
+  void clearReference(){
+      for (auto p : references) {
+          (*p).removeParent();
+      }
+      references.clear();
+  }
+
+  void removeParent(){
+      parent = nullptr;
+  }
+
+private:
+  RegionID id;
+  Name title;
+  std::vector<Coord> regionShapeCoords;
+  std::unordered_set<StationID> region_stations;
+  std::vector<Region*> references;
+  Region* parent = nullptr;
+};
+
+struct CompareCoordinates {
+   bool operator()(Coord c1, Coord c2) const {
+       double distanceA = std::abs(c1.x) + std::abs(c1.y);
+       double distanceB = std::abs(c2.x) + std::abs(c2.y);
+
+       if (distanceA == distanceB) {
+           return c1.y < c2.y;
+       }
+
+       return distanceA < distanceB;
+   }
+};
+
+struct CompareCoordinatesForSet {
+   bool operator()(std::pair<Coord, StationID> c1, std::pair<Coord, StationID> c2) const {
+      if (c1.first == c2.first) {
+          return c1.second < c2.second;
+      }
+       double distanceA = std::abs(c1.first.x) + std::abs(c1.first.y);
+       double distanceB = std::abs(c2.first.x) + std::abs(c2.first.y);
+
+       if (distanceA == distanceB) {
+           return c1.first.y < c2.first.y;
+       }
+
+       return distanceA < distanceB;
+   }
+};
+
+// Define Graph class
+class Graph {
+private:
+    // TODO add functionality for duration.
+    std::map<StationID, std::vector<std::pair<StationID, double>>> adjacency_list;
+
+public:
+    // Function to add an edge between two stations with a given distance
+    // TODO add functionality for duration.
+    void addEdge(const StationID src, const StationID dest, double distance) {
+        adjacency_list[src].push_back({dest, distance});
+        // Uncomment below line if the graph is undirected
+        // adjacency_list[dest].push_back({src, distance});
+    }
+
+    // TODO functionality to just clear adjacency list
+    void clearEdge(){
+        adjacency_list.clear();
+    }
+
+    std::vector<std::pair<StationID, double>> getNextConnections(StationID stationID){
+        return adjacency_list.find(stationID)->second;
+    }
+
+    // TODO add functionality to remove edge?
+};
 
 // Add your own STL includes above this comment
-
-#include "customtypes.hh"
 
 // This is the class you are supposed to implement
 
@@ -167,8 +311,26 @@ public:
 
 private:
     // Add stuff needed for your class implementation here
+    std::multiset<std::pair<Name, StationID>> set_of_station_names;
+    std::multimap<Coord, StationID, CompareCoordinates> multimap_of_station_coord;
 
+    std::set<std::pair<Coord, StationID>, CompareCoordinatesForSet> set_of_station_coord;
 
+    std::unordered_map<StationID, Station_struct> map_of_stationID;
+    std::vector<StationID> sorted_Id_Alphabetically;
+    std::vector<StationID> sorted_Id_Distance;
+    std::vector<std::pair<Coord, StationID>> vector_of_station_coord;
+    bool is_latest_station_sortedValid = false;
+    bool is_latest_station_sortedAlphabeticallyValid = false;
+
+    std::unordered_map<RegionID, Region> map_of_regionID;
+    std::unordered_map<StationID, RegionID> map_of_station_region_id;
+    std::unordered_multimap<StationID, std::pair<Time, TrainID>> multimap_of_station_train_id;
+    void get_all_references_helper(Region node, std::vector<RegionID>& referenceListToUpdate);
+    RegionID get_parent(RegionID id);
+    std::vector<RegionID> getAllParentsOfRegions(RegionID id);
+    // prg 2
+    std::unordered_map<TrainID,  std::vector<std::pair<StationID, Time>> map_of_train_vectorOfStations;
 };
 
 #endif // DATASTRUCTURES_HH
