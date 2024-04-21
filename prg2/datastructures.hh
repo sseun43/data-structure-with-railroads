@@ -158,6 +158,10 @@ public:
     }
 
     std::vector<std::pair<StationID, double>> getNextConnections(StationID stationID){
+        auto search = adjacency_map_of_list.find(stationID);
+        if(search == adjacency_map_of_list.end()){
+            return {};
+        }
         return adjacency_map_of_list.find(stationID)->second;
     }
 
