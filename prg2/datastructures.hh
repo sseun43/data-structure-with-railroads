@@ -146,7 +146,7 @@ public:
             // found
             std::vector<std::pair<StationID, double>> station_distance_2 = search->second;
             station_distance_2.push_back({dest, distance});
-            adjacency_map_of_list.insert({src,station_distance_2});
+            adjacency_map_of_list[src] = station_distance_2;
         }
         // Uncomment below line if the graph is undirected
         // adjacency_map_of_list[dest].push_back({src, distance});
