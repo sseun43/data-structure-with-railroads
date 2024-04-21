@@ -131,24 +131,34 @@ struct CompareCoordinatesForSet {
 class Graph {
 private:
     // TODO add functionality for duration.
-    std::map<StationID, std::vector<std::pair<StationID, double>>> adjacency_list;
+    std::map<StationID, std::vector<std::pair<StationID, double>>> adjacency_map_of_list;
 
 public:
     // Function to add an edge between two stations with a given distance
     // TODO add functionality for duration.
     void addEdge(const StationID src, const StationID dest, double distance) {
-        adjacency_list[src].push_back({dest, distance});
+        auto search = adjacency_map_of_list.find(src);
+        if(search == adjacency_map_of_list.end()){
+            // not found
+            std::vector<std::pair<StationID, double>> station_distance = {{dest, distance}};
+            adjacency_map_of_list.insert({src,station_distance});
+        } else {
+            // found
+            std::vector<std::pair<StationID, double>> station_distance_2 = search->second;
+            station_distance_2.push_back({dest, distance});
+            adjacency_map_of_list.insert({src,station_distance_2});
+        }
         // Uncomment below line if the graph is undirected
-        // adjacency_list[dest].push_back({src, distance});
+        // adjacency_map_of_list[dest].push_back({src, distance});
     }
 
     // TODO functionality to just clear adjacency list
     void clearEdge(){
-        adjacency_list.clear();
+        adjacency_map_of_list.clear();
     }
 
     std::vector<std::pair<StationID, double>> getNextConnections(StationID stationID){
-        return adjacency_list.find(stationID)->second;
+        return adjacency_map_of_list.find(stationID)->second;
     }
 
     // TODO add functionality to remove edge?
