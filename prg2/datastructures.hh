@@ -330,6 +330,7 @@ private:
     RegionID get_parent(RegionID id);
     std::vector<RegionID> getAllParentsOfRegions(RegionID id);
     // prg 2
+    Graph graph;
     std::unordered_map<TrainID,  std::vector<std::pair<StationID, Time>>> map_of_train_vectorOfStations;
 };
 

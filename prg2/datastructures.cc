@@ -646,18 +646,18 @@ bool Datastructures::add_train(TrainID trainid, std::vector<std::pair<StationID,
     if (trainSearch == map_of_train_vectorOfStations.end()) {
         // not found
         map_of_train_vectorOfStations.insert({trainid, stationtimes});
-        for (int i = 0; i + 1 < stationtimes.size(); ++i) {
-            StationID src = route[i].first;
+        for (unsigned int i = 0; i + 1 < stationtimes.size(); ++i) {
+            StationID src = stationtimes[i].first;
             // add_departure(src, trainid, route[i].second);
-            StationID dest = route[i + 1].first;
+            StationID dest = stationtimes[i + 1].first;
             // potential for trouble if get_station_coordinates doesnt work.
             Coord srcLocation = get_station_coordinates(src);
             Coord destLocation = get_station_coordinates(dest);
             if(srcLocation == NO_COORD || destLocation == NO_COORD){
-                return false
+                return false;
             }
             double distance = std::abs(srcLocation.x - destLocation.x) + std::abs(srcLocation.y - destLocation.y);
-            Graph.addEdge(src, dest, distance);
+            graph.addEdge(src, dest, distance);
             // adjacency_list[src].push_back({dest, distance});
             // // Uncomment below line if the Graph is undirected
             // // adjacency_list[dest].push_back({src, distance});
@@ -677,7 +677,7 @@ std::vector<StationID> Datastructures::next_stations_from(StationID id)
         // not found
         return {NO_STATION};
     } else {
-        std::vector<std::pair<StationID, double>> directConnections = Graph.getNextConnections(id);
+        std::vector<std::pair<StationID, double>> directConnections = graph.getNextConnections(id);
         if(directConnections.size() == 0) {
             return {};
         }
@@ -702,7 +702,7 @@ std::vector<StationID> Datastructures::train_stations_from(StationID stationid, 
         return {NO_STATION};
     } else {
         std::vector<std::pair<StationID, Time> > stationtimes = trainSearch->second;
-        auto it = std::find_if(stationtimes.begin(), stationtimes.end(), [key](const std::pair<StationID, Time>& p) { return p.first == stationid; });
+        auto it = std::find_if(stationtimes.begin(), stationtimes.end(), [stationid](const std::pair<StationID, Time>& p) { return p.first == stationid; });
         if (it == stationtimes.end()) {
             return {NO_STATION};
         } else {
@@ -724,7 +724,7 @@ std::vector<StationID> Datastructures::train_stations_from(StationID stationid, 
 void Datastructures::clear_trains()
 {
     // Replace the line below with your implementation
-    Graph.clearEdge();
+    graph.clearEdge();
     map_of_train_vectorOfStations.clear();
     //throw NotImplemented("clear_trains()");
 }
