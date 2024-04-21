@@ -707,6 +707,9 @@ std::vector<StationID> Datastructures::train_stations_from(StationID stationid, 
             return {NO_STATION};
         } else {
             auto it1 = std::next(it, 1);
+            if(it1 == stationtimes.end()){
+              return {NO_STATION};  
+            }
             std::vector<std::pair<StationID, double>> directConnections(it1, stationtimes.end());
             std::vector<StationID> vectorOfId;
             vectorOfId.reserve(map_of_stationID.size());
