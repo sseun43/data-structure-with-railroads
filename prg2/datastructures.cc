@@ -733,10 +733,30 @@ void Datastructures::clear_trains()
     //throw NotImplemented("clear_trains()");
 }
 
-std::vector<std::pair<StationID, Distance>> Datastructures::route_any(StationID /*fromid*/, StationID /*toid*/)
+std::vector<std::pair<StationID, Distance>> Datastructures::route_any(StationID fromid, StationID toid)
 {
     // Replace the line below with your implementation
-    throw NotImplemented("route_any()");
+    // first check if the target is a direct connection before calling DFS
+    Coord srcLocation = get_station_coordinates(fromid);
+    Coord destLocation = get_station_coordinates(toid);
+    if(srcLocation == NO_COORD || destLocation == NO_COORD){
+        return {{NO_STATION, NO_DISTANCE}};
+    }
+    
+    std::vector<StationID> direct_connections = next_stations_from(fromid);
+    if(direct_connections.find(toid) != direct_connections.end()){
+        // found
+        double distance = std::abs(srcLocation.x - destLocation.x) + std::abs(srcLocation.y - destLocation.y);
+        return {{fromid, 0},{toid, distance}};
+    }
+
+    graph.clearRouteVisited();
+    if (graph.DFS({fromid, 0}, toid)) {
+        return graph.getRouteVisited();
+    }
+    
+    return {};
+    // throw NotImplemented("route_any()");
 }
 
 std::vector<std::pair<StationID, Distance>> Datastructures::route_least_stations(StationID /*fromid*/, StationID /*toid*/)

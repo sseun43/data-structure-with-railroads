@@ -132,6 +132,8 @@ class Graph {
 private:
     // TODO add functionality for duration.
     std::map<StationID, std::vector<std::pair<StationID, double>>> adjacency_map_of_list;
+    std::vector<std::pair<StationID, double>> route_visited;
+    std::map<StationID, bool> visited;
 
 public:
     // Function to add an edge between two stations with a given distance
@@ -164,6 +166,53 @@ public:
         }
         return adjacency_map_of_list.find(stationID)->second;
     }
+
+    std::vector<std::pair<StationID, double>> getRouteVisited(){
+        return route_visited;
+    }
+
+    void clearRouteVisited(){
+        route_visited.clear();
+    }
+
+    bool DFS(std::pair<StationID, double> srcID_distance_pair, StationID destID){
+        // Mark the current node as visited and
+        // print it
+
+        visited[srcID_distance_pair.first] = true;
+        // add visited v into a vector
+        route_visited.push_back(srcID_distance_pair);
+        if(srcID_distance_pair.first == destID){
+            return;
+        }
+        // auto it = adjacency_map_of_list[srcID_distance_pair.first].begin();
+        // auto prev_it = it;
+
+        // Move to the first element
+        // ++it;
+
+        for (auto it = adjacency_map_of_list[srcID_distance_pair.first].begin(); it != adjacency_map_of_list[srcID_distance_pair.first].end(); ++it) {
+            // if i > 0, remove from the list of [i-1] from the point of 
+                // if(it != adjacency_map_of_list[srcID_distance_pair.first].begin()) {
+                //     // while u have not found the station id pop route visitted
+                //     while(){
+
+                //     }
+                // }
+
+            if(!visited[it->second]){
+                if (DFS(it->second, destID)) {
+                    return true;
+                }
+            }
+
+        }
+        // Backtrack
+        route_visited.pop_back();
+        return false;
+    }
+
+
 
     // TODO add functionality to remove edge?
 };
